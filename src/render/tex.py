@@ -169,14 +169,42 @@ def _ext_for(content_type: str, url: str) -> str:
     return ".jpg"
 
 
-def _to_jpeg(path: Path) -> Path | None:
-    if path.suffix.lower() in {".jpg", ".jpeg", ".png"}:
-        return path
-    jpg = path.with_suffix(".jpg")
+# pdflatex picks its image driver from the file extension and reads only these.
+_TEX_FORMATS = {"JPEG": ".jpg", "PNG": ".png"}
+# Below this, a "photo" is a logo, an icon or a tracking pixel. Blown up to
+# column width it looks broken, so the story runs without a picture instead.
+MIN_IMAGE_SIDE = 200
+
+
+def usable_image(path: Path) -> Path | None:
+    """Make a downloaded file safe for pdflatex, or delete it and give up.
+
+    A server sending an SVG icon or an HTML error page under a JPEG content
+    type once killed a whole run: the bytes were saved as .jpg, pdflatex found
+    no JPEG header, and no PDF was produced. So the file is opened for real,
+    rejected if it is not an image or is icon-sized, and rewritten as JPEG when
+    it is a format pdflatex cannot read (webp, gif) -- or simply renamed when
+    the extension lies about the contents (a PNG saved as .jpg fails too).
+    """
     try:
         with Image.open(path) as image:
-            image.convert("RGB").save(jpg, "JPEG", quality=90)
-    except OSError:
+            image.verify()  # cheap header check; invalidates the handle
+        with Image.open(path) as image:
+            fmt, (width, height) = image.format, image.size
+            if min(width, height) < MIN_IMAGE_SIDE:
+                path.unlink(missing_ok=True)
+                return None
+            wanted = _TEX_FORMATS.get(fmt or "")
+            if wanted is None:
+                jpg = path.with_suffix(".jpg")
+                image.convert("RGB").save(jpg, "JPEG", quality=90)
+            elif path.suffix.lower() not in {wanted, ".jpeg"}:
+                jpg = path.with_suffix(wanted)
+                path.replace(jpg)
+            else:
+                return path
+    except (OSError, ValueError, Image.DecompressionBombError):
+        path.unlink(missing_ok=True)
         return None
     if not jpg.exists() or jpg.stat().st_size == 0:
         return None
@@ -188,11 +216,9 @@ def _to_jpeg(path: Path) -> Path | None:
 def cache_image(url: str, dest_dir: Path) -> Path | None:
     dest_dir.mkdir(parents=True, exist_ok=True)
     digest = hashlib.sha256(url.encode()).hexdigest()[:12]
-    existing = next(dest_dir.glob(f"{digest}.*"), None)
+    existing = next((p for p in dest_dir.glob(f"{digest}.*") if "_r" not in p.stem), None)
     if existing and existing.stat().st_size > 0:
-        if existing.suffix.lower() == ".webp":
-            return _to_jpeg(existing)
-        return existing
+        return usable_image(existing)
     try:
         response = httpx.get(
             url,
@@ -205,9 +231,7 @@ def cache_image(url: str, dest_dir: Path) -> Path | None:
         ext = _ext_for(response.headers.get("content-type", ""), url)
         path = dest_dir / f"{digest}{ext}"
         path.write_bytes(response.content)
-        if ext == ".webp":
-            return _to_jpeg(path)
-        return path
+        return usable_image(path)
     except httpx.HTTPError:
         return None
 
@@ -402,7 +426,12 @@ def prepare_edition(edition: Edition, image_dir: Path) -> dict:
         # edge. Without this, keepaspectratio shrinks a mismatched photo to
         # a fraction of the column width and leaves the rest blank.
         cropped = crop_to_ratio(path, ratio)
-        return f"images/{(cropped or path).name}"
+        if cropped is None:
+            # The file downloaded but Pillow cannot work with it. Falling back
+            # to the uncropped original would hand pdflatex the same bad file.
+            warn(f"unusable photo, running without it: {article.image_url}")
+            return None
+        return f"images/{cropped.name}"
 
     lead_drop = ("", "")
     if lead and lead.body:
