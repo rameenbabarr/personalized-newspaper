@@ -1,0 +1,13 @@
+[Unit]
+Description=Run The Rameen Times at 07:00 Asia/Karachi
+
+[Timer]
+# The timezone is named here, so the edition still lands at 07:00 Karachi
+# whatever the machine's local zone is set to.
+OnCalendar=*-*-* 07:00:00 Asia/Karachi
+# If the machine was asleep at 07:00, send on the next boot instead of
+# skipping the day.
+Persistent=true
+
+[Install]
+WantedBy=timers.target

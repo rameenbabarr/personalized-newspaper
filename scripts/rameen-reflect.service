@@ -1,0 +1,9 @@
+[Unit]
+Description=The Rameen Times weekly taste report
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/Desktop/personal-newspaper
+ExecStart=%h/Desktop/personal-newspaper/.venv/bin/python -m src.cli taste reflect

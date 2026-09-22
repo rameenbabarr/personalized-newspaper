@@ -1,0 +1,22 @@
+[project]
+name = "rameen-times"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "ddgs",
+    "feedparser",
+    "httpx",
+    "icalendar",
+    "jinja2",
+    "pillow",
+    "pydantic>=2",
+    "pyyaml",
+    "recurring-ical-events",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

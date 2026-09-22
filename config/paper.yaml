@@ -1,0 +1,15 @@
+paper_name: The Rameen Times
+tagline: All the news that fits the morning
+timezone: Asia/Karachi
+send:
+  from: rameenbabarr04@gmail.com
+  to: rameenbabarr04@gmail.com
+trello:
+  boardName: Tasks
+  pendingLists:
+    - this week
+    - later
+    - To-Do
+  inProgressLists:
+    - today
+    - In-Progress

@@ -1,0 +1,94 @@
+{
+  "paper_name": "The Rameen Times",
+  "date": "2026-09-19",
+  "volume": "Vol. I, No. 262",
+  "tagline": "A clear Saturday in Islamabad. High 32.",
+  "generated_at": "2026-09-19T19:00:00+05:00",
+  "timezone": "Asia/Karachi",
+  "page_mode": "news-spread",
+  "diary": [],
+  "diary_note": "A clear Saturday. No meetings.",
+  "desk": {
+    "pending": [
+      {
+        "id": "todo-paper",
+        "title": "Read the morning paper before the board",
+        "status": "pending",
+        "list_name": "To-Do"
+      }
+    ],
+    "in_progress": [
+      {
+        "id": "wip-render",
+        "title": "Lock the A4 LaTeX furniture",
+        "status": "in-progress",
+        "list_name": "In-Progress"
+      }
+    ],
+    "ranked_ids": ["wip-render", "todo-paper"]
+  },
+  "desk_column": {
+    "headline": "Finish the furniture, then stop",
+    "body": [
+      "The board is short. The render lock is the only card that should move before lunch.",
+      "The paper card can wait until the PDF opens cleanly in Preview."
+    ]
+  },
+  "articles": [
+    {
+      "id": "space-apod",
+      "headline": "A zodiacal night over the dark sky",
+      "dek": "NASA's picture of the day is a band of dust light, not a headline reprint.",
+      "byline": "By the night editor",
+      "section": "Space",
+      "body": [
+        "The night sky over a dry horizon showed the zodiacal light as a faint cone, the sort of thing a morning reader actually stops for.",
+        "NASA published the frame as the astronomy picture of the day. The glow is sunlight scattered by dust in the plane of the solar system, not a weather effect and not a city haze.",
+        "It is a Saturday picture: one photograph, a short caption, and a reason to look up after the desk is clear."
+      ],
+      "role": "lead",
+      "image_url": "https://picsum.photos/id/1015/1200/800",
+      "source_url": "https://apod.nasa.gov/apod/ap240101.html",
+      "source_name": "NASA APOD"
+    },
+    {
+      "id": "art-indigo",
+      "headline": "A short indigo class, if you have an afternoon",
+      "dek": "",
+      "byline": "By the night editor",
+      "section": "Art and crafts",
+      "body": [
+        "A weekend workshop in block print and dye is the sort of crafts brief this paper keeps: one thing to do, not a lecture, and not a repeat of last week's pot."
+      ],
+      "role": "secondary",
+      "source_url": "https://hyperallergic.com/indigo-workshop",
+      "source_name": "Hyperallergic"
+    },
+    {
+      "id": "pal-aid",
+      "headline": "Aid trucks wait at the crossing again",
+      "dek": "",
+      "byline": "By the night editor",
+      "section": "Palestine",
+      "body": [
+        "Trucks carrying food and medicine remained stacked at the crossing overnight, a last-24-hours note without a death toll the desk cannot confirm."
+      ],
+      "role": "brief",
+      "source_url": "https://www.middleeasteye.net/aid-crossing",
+      "source_name": "Middle East Eye"
+    },
+    {
+      "id": "tech-weights",
+      "headline": "Open weights are not open source",
+      "dek": "",
+      "byline": "By the night editor",
+      "section": "Tech and AI",
+      "body": [
+        "The Register's morning brief is a naming fight: labs keep calling dumped model files open source when the license is not."
+      ],
+      "role": "brief",
+      "source_url": "https://www.theregister.com/open-weights",
+      "source_name": "The Register"
+    }
+  ]
+}

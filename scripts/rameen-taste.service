@@ -1,0 +1,14 @@
+[Unit]
+Description=The Rameen Times taste server (PDF vote links, trends page)
+Documentation=file:%h/Desktop/personal-newspaper/docs/how-it-works.md
+
+[Service]
+Type=simple
+WorkingDirectory=%h/Desktop/personal-newspaper
+# Binds 127.0.0.1:8765 only. The PDF's "more like this / less" links land here.
+ExecStart=%h/Desktop/personal-newspaper/.venv/bin/python -m src.cli serve
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

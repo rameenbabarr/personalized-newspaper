@@ -1,0 +1,33 @@
+{
+  "palestine": [
+    {"name": "Al Jazeera", "url": "https://www.aljazeera.com/xml/rss/all.xml"},
+    {"name": "Middle East Eye", "url": "https://www.middleeasteye.net/rss"},
+    {"name": "+972 Magazine", "url": "https://www.972mag.com/feed/"},
+    {"name": "Mondoweiss", "url": "https://mondoweiss.net/feed/"},
+    {"name": "Drop Site News", "url": "https://www.dropsitenews.com/feed"},
+    {"name": "Electronic Intifada", "url": "https://electronicintifada.net/rss.xml"},
+    {"name": "Middle East Monitor", "url": "https://www.middleeastmonitor.com/feed/"}
+  ],
+  "art-crafts": [
+    {"name": "ArtNow Pakistan", "url": "https://www.artnowpakistan.com/feed/"},
+    {"name": "STIR World", "url": "https://www.stirworld.com/rss.xml"},
+    {"name": "Hyperallergic", "url": "https://hyperallergic.com/feed/"},
+    {"name": "This Is Colossal", "url": "https://www.thisiscolossal.com/feed/"},
+    {"name": "Design Milk", "url": "https://design-milk.com/feed/"}
+  ],
+  "islamabad-folk": [],
+  "space": [
+    {"name": "NASA Breaking News", "url": "https://www.nasa.gov/rss/dyn/breaking_news.rss"},
+    {"name": "NASA Image of the Day", "url": "https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss"},
+    {"name": "ESA Top News", "url": "https://www.esa.int/rssfeed/TopNews"},
+    {"name": "Universe Today", "url": "https://www.universetoday.com/feed"},
+    {"name": "Sky & Telescope", "url": "https://skyandtelescope.org/astronomy-news/feed/"}
+  ],
+  "tech-ai": [
+    {"name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/"},
+    {"name": "Hugging Face", "url": "https://huggingface.co/blog/feed.xml"},
+    {"name": "404 Media", "url": "https://www.404media.co/rss/"},
+    {"name": "Ars Technica Technology Lab", "url": "https://feeds.arstechnica.com/arstechnica/technology-lab"},
+    {"name": "IEEE Spectrum AI", "url": "https://spectrum.ieee.org/feeds/topic/artificial-intelligence.rss"}
+  ]
+}

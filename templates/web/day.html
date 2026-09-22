@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% set page = "day" %}
+{% block title %}{{ edition.date }} · The Rameen Times{% endblock %}
+{% block style %}
+  .dates { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 8px; }
+  .dates a { font: 13px var(--sans); color: var(--muted); }
+  .dates a.on { color: var(--ink); font-weight: 700; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+  .card { background: var(--card); border: 1px solid var(--rule); display: flex; flex-direction: column; scroll-margin-top: 16px; }
+  .card.lead { grid-column: 1 / -1; }
+  .card img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; display: block; }
+  .card.lead img { aspect-ratio: 16 / 9; max-height: 420px; }
+  .card .in { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .card h3 { margin: 0; font-size: 20px; line-height: 1.2; }
+  .card.lead h3 { font-size: 30px; }
+  .card p { margin: 0; font-size: 15px; }
+  .votes { margin-top: auto; padding-top: 10px; display: flex; gap: 8px; align-items: center; }
+  .votes a { font: 600 13px var(--sans); text-decoration: none; border: 1px solid var(--rule); padding: 5px 12px; border-radius: 4px; }
+  .votes a.up.on { background: var(--up); border-color: var(--up); color: #fff; }
+  .votes a.down.on { background: var(--down); border-color: var(--down); color: #fff; }
+  .votes a:hover { border-color: var(--ink); }
+  .card.trial { border: 2px solid var(--red); }
+  .badge { display: inline-block; font: 700 11px var(--sans); color: #fff; background: var(--red); padding: 1px 7px; border-radius: 3px; text-transform: uppercase; letter-spacing: .05em; margin-left: 6px; }
+{% endblock %}
+{% block body %}
+<div class="dates">
+  {% for d in dates[:10] %}<a href="/day/{{ d }}" class="{{ 'on' if d == edition.date }}">{{ d }}</a>{% endfor %}
+</div>
+<p class="muted" style="text-align:center">Tap <b>more</b> or <b>less</b> on anything you read. You can change your mind.</p>
+<div class="grid">
+{% for c in cards %}
+  {% set a = c.article %}
+  <article class="card {{ a.role }}{{ ' trial' if a.trial }}" id="{{ a.id }}">
+    {% if c.image %}<img src="{{ c.image }}" alt="" loading="lazy">{% endif %}
+    <div class="in">
+      <div class="kicker">{{ c.topic|topic_label }}{% if a.role == 'brief' %} · brief{% endif %}{% if a.trial %}<span class="badge">Trial topic</span>{% endif %}</div>
+      {% if a.trial and edition.trial_note %}<div class="muted"><i>{{ edition.trial_note }}</i> More keeps this topic, less and it's gone for good.</div>{% endif %}
+      <h3>{{ a.headline }}</h3>
+      <p>{{ a.body[0] if a.body else '' }}</p>
+      <div class="muted">{{ a.source_name }}{% if a.source_url %} · <a href="{{ a.source_url }}" target="_blank" rel="noopener">source</a>{% endif %}</div>
+      {% if a.themes %}<div>{% for t in a.themes %}<span class="tag">{{ t }}</span>{% endfor %}</div>{% endif %}
+      <div class="votes">
+        <a class="up {{ 'on' if c.vote > 0 }}" href="/vote/{{ a.id }}/up?back=/day/{{ edition.date }}">▲ more</a>
+        <a class="down {{ 'on' if c.vote < 0 }}" href="/vote/{{ a.id }}/down?back=/day/{{ edition.date }}">▼ less</a>
+      </div>
+    </div>
+  </article>
+{% endfor %}
+</div>
+{% endblock %}

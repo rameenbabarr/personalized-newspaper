@@ -1,0 +1,16 @@
+[Unit]
+Description=The Rameen Times morning edition
+Documentation=file:%h/Desktop/personal-newspaper/project.md
+# The pipeline is all network: Tavily, Anthropic, Trello, iCal, SMTP.
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=900
+StartLimitBurst=3
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/Desktop/personal-newspaper
+ExecStart=%h/Desktop/personal-newspaper/scripts/run-morning.sh
+# A cold boot can reach the timer before DNS is really up.
+Restart=on-failure
+RestartSec=120

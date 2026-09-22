@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}The Rameen Times{% endblock %}</title>
+<style>
+  /* Always light, whatever the system theme: a pastel wash (pink, baby blue,
+     pale yellow) with near-white cards so the text keeps full contrast. */
+  :root {
+    color-scheme: light;
+    --ink: #161616; --muted: #5f5b54; --rule: #d9d3cc; --paper: #ffffff;
+    --card: rgba(255, 255, 255, 0.82); --red: #9e1b26; --up: #2f6f4e; --down: #9e1b26;
+    --wash: linear-gradient(135deg, #fde4ee 0%, #dcecff 50%, #fff8d9 100%);
+    --serif: "Charter", "Bitstream Charter", Georgia, serif;
+    --sans: "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { min-height: 100%; background: #fdf3f7 var(--wash) fixed; }
+  body { margin: 0; min-height: 100vh; background: transparent; color: var(--ink); font: 16px/1.5 var(--serif); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px 48px; }
+  header.mast { text-align: center; border-bottom: 3px double var(--ink); padding: 18px 0 10px; margin-bottom: 18px; }
+  header.mast h1 { margin: 0; font-size: clamp(26px, 5vw, 40px); letter-spacing: .02em; text-transform: uppercase; }
+  nav { font: 13px var(--sans); display: flex; gap: 18px; justify-content: center; margin-top: 8px; flex-wrap: wrap; }
+  nav a { color: var(--ink); text-decoration: none; text-transform: uppercase; letter-spacing: .06em; }
+  nav a.on { color: var(--red); font-weight: 700; }
+  .kicker { font: 700 12px var(--sans); color: var(--red); text-transform: uppercase; letter-spacing: .06em; }
+  .muted { color: var(--muted); font-family: var(--sans); font-size: 13px; }
+  h2.banner { font-size: 24px; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 4px 0; margin: 28px 0 14px; }
+  .tag { display: inline-block; font: 12px var(--sans); border: 1px solid var(--rule); border-radius: 999px; padding: 1px 8px; margin: 2px 4px 0 0; color: var(--muted); }
+  a { color: inherit; }
+  {% block style %}{% endblock %}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <h1>The Rameen Times</h1>
+    <nav>
+      <a href="/" class="{{ 'on' if page == 'day' }}">Today</a>
+      <a href="/trends" class="{{ 'on' if page == 'trends' }}">Your taste</a>
+    </nav>
+  </header>
+  {% block body %}{% endblock %}
+</div>
+</body>
+</html>

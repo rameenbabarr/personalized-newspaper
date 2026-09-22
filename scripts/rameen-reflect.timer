@@ -1,0 +1,10 @@
+[Unit]
+Description=Weekly taste report, Sunday 08:00 Asia/Karachi
+
+[Timer]
+# After Sunday's paper, so the week's last edition is already logged.
+OnCalendar=Sun *-*-* 08:00:00 Asia/Karachi
+Persistent=true
+
+[Install]
+WantedBy=timers.target

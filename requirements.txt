@@ -1,0 +1,10 @@
+ddgs
+feedparser
+httpx
+icalendar
+jinja2
+pillow
+pydantic>=2
+pyyaml
+recurring-ical-events
+pytest

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% set page = "day" %}
+{% block body %}
+<div style="text-align:center; padding: 40px 0">
+  <h2>No edition here yet.</h2>
+  <p class="muted">Run <code>python -m src.cli preview</code> to print one.</p>
+  {% if dates %}<p class="muted">Latest: <a href="/day/{{ dates[0] }}">{{ dates[0] }}</a></p>{% endif %}
+</div>
+{% endblock %}

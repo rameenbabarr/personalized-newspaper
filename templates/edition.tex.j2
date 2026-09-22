@@ -1,0 +1,396 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,top=10mm,bottom=14mm,left=12mm,right=12mm,columnsep=6mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{lettrine}
+\usepackage{needspace}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{microtype}
+\usepackage{ragged2e}
+\usepackage[skip=0pt]{parskip}
+\usepackage{charter}
+% hyperref patches what loads before it, so it goes near the end.
+\usepackage[hidelinks]{hyperref}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\rmdefault}
+\newcommand{\headlinefont}{\fontfamily{ppl}\selectfont}
+\newcommand{\sansfont}{\fontfamily{\sfdefault}\selectfont}
+
+% ---- Pure white page. Boxes get only a hairline-thin tint so the paper reads
+% as white first, not cream. ----
+\definecolor{ink}{HTML}{161616}
+\definecolor{rule}{HTML}{161616}
+\definecolor{hairline}{HTML}{C7C4BC}
+\definecolor{mastheadred}{HTML}{9E1B26}
+\definecolor{boxfill}{HTML}{F7F7F5}
+\definecolor{boxfillwarm}{HTML}{FBEEEE}
+\definecolor{captiongray}{HTML}{6E6A62}
+\definecolor{paperbg}{HTML}{FFFFFF}
+\pagecolor{paperbg}
+\color{ink}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.6pt}
+\fancyfoot[C]{\footnotesize\sansfont (( edition.paper_name|tex )) \ ---\ (( edition.date|tex )) \ ---\ Page \thepage}
+
+\newcommand{\kicker}[1]{{\sansfont\bfseries\small\color{mastheadred}\MakeUppercase{#1}}\par\vspace{1.1mm}}
+\newcommand{\byline}[1]{{\sansfont\footnotesize\bfseries #1}\par}
+\newcommand{\dateline}[1]{{\sansfont\footnotesize\itshape #1}\par\vspace{1.1mm}}
+\newcommand{\hrulethin}{\noindent{\color{hairline}\rule{\linewidth}{0.5pt}}}
+\newcommand{\hrulethick}{\noindent{\color{rule}\rule{\linewidth}{1.6pt}}}
+% \photobox{width}{file}{caption -- what the picture shows, plus credit}
+% No height is given: every image is pre-cropped (src/render/tex.py) to the
+% exact ratio its slot needs, so it always fills #1 edge to edge.
+\newcommand{\photobox}[3]{%
+  \noindent\includegraphics[width=#1]{#2}\par
+  \vspace{-0.5mm}
+  {\color{rule}\rule{#1}{0.4pt}}\par
+  \vspace{0.6mm}
+  {\sansfont\footnotesize\color{captiongray} #3}\par
+}
+\newcommand{\sectionbanner}[2]{%
+  \hrulethick\vspace{1.2mm}
+  \noindent{\headlinefont\bfseries\fontsize{24}{28}\selectfont #1}\hfill
+  {\sansfont\small\color{captiongray}#2}\par
+  \vspace{-1.2mm}\hrulethick\vspace{3mm}
+}
+\newcommand{\tickbox}{{\color{captiongray}\fboxsep=0pt\fbox{\rule{0pt}{1.3mm}\rule{1.3mm}{0pt}}}}
+% Banner for the reader's own day, so the diary and the board read as one
+% standing department rather than two loose boxes.
+\newcommand{\railbanner}[1]{%
+  \hrulethick\vspace{1.1mm}
+  \noindent{\headlinefont\bfseries\fontsize{16}{18}\selectfont #1}\par
+  \vspace{0.7mm}\hrulethick\vspace{2.5mm}
+}
+% \storytop{kicker}{headline} -- one unbreakable unit. A column break between a
+% kicker and its headline stranded "SPACE" and "TECH AND AI" alone at the foot
+% of a column with their stories on the next page.
+\newcommand{\storytop}[2]{%
+  \begin{minipage}{\linewidth}
+  \kicker{#1}
+  {\raggedright\headlinefont\bfseries\interlinepenalty=10000 #2\par}
+  \end{minipage}\par\nopagebreak[4]\vspace{1.3mm}
+}
+% \votelinks{story id} -- one-click taste votes, caught by the local server
+% (python -m src.cli serve). Plain words, not arrows: pdfTeX has no glyph for them.
+\newcommand{\votelinks}[1]{{\sansfont\scriptsize\color{captiongray}%
+  \href{(( vote_base ))/#1/up}{more like this}\ \textbullet\ \href{(( vote_base ))/#1/down}{less}}}
+% \triallinks{story id} -- the same votes, worded as the topic decision they make.
+\newcommand{\triallinks}[1]{{\sansfont\footnotesize\bfseries\color{mastheadred}%
+  \href{(( vote_base ))/#1/up}{more: keep this topic}\ \textbullet\ \href{(( vote_base ))/#1/down}{less: never show it again}}}
+\newcommand{\cardtitle}[1]{{\sansfont\footnotesize\bfseries\MakeUppercase{#1}}\par\hrulethin\par\vspace{1.1mm}}
+
+\setlength{\columnsep}{6mm}
+\setlength{\columnseprule}{0.4pt}
+\def\columnseprulecolor{\color{hairline}}
+
+\begin{document}
+\setlength{\parindent}{12pt}
+\raggedbottom
+% Column spacing is deliberately rigid (no \smallskip inside stories), so
+% multicols has no stretchy glue to inflate and balancing simply evens the
+% columns out instead of tearing gaps around photos and bylines.
+% Let the lead body begin on page one even when the rail leaves only a short
+% run of space, instead of deferring the whole thing and ending page one early.
+\setlength{\premulticols}{30pt}
+
+\noindent{\sansfont\footnotesize
+\MakeUppercase{ (( edition.date|tex )) } \hfill
+(( edition.volume|tex )) \hfill
+\MakeUppercase{Morning Edition}}
+\par\vspace{1mm}\hrulethin\vspace{2mm}
+
+\begin{center}
+  {\headlinefont\bfseries\fontsize{32}{34}\selectfont (( edition.paper_name|upper|tex ))\par}
+  \vspace{0.8mm}
+  {\sansfont\small (( (edition.tagline or '')|tex ))}
+\end{center}
+\vspace{1.2mm}\hrulethick\vspace{0.6mm}\hrulethin\vspace{2.5mm}
+
+((* macro this_day_box() *))
+\begin{tcolorbox}[colback=boxfill,colframe=ink,boxrule=0.5pt,arc=0pt,
+                   left=3mm,right=3mm,top=2mm,bottom=2mm]
+\cardtitle{Today's meetings}
+((* if edition.diary *))
+{\sansfont\footnotesize
+((* for meeting in edition.diary *))
+\textbf{(( meeting.start.strftime('%a') )) (( meeting.start.strftime('%H:%M') if not meeting.all_day else 'all day' ))} \ --- \ (( meeting.title|tex ))((* if meeting.location *)) \ \textbullet\ (( meeting.location|tex ))((* endif *))\\
+((* endfor *))
+}
+((* else *))
+{\sansfont\footnotesize\itshape (( (edition.diary_note or 'No meetings today.')|tex ))\par}
+((* endif *))
+\end{tcolorbox}
+((* endmacro *))
+
+((* macro inside_box() *))
+\begin{tcolorbox}[colback=boxfill,colframe=ink,boxrule=0.5pt,arc=0pt,
+                   left=3mm,right=3mm,top=2mm,bottom=2mm]
+\cardtitle{Inside today's edition}
+{\sansfont\footnotesize
+\begin{tabularx}{\linewidth}{@{}X r@{}}
+((* if secondaries *))
+The Paper & \pageref{sec:paper} \\
+((* endif *))
+((* if briefs *))
+Briefs & \pageref{sec:briefs} \\
+((* endif *))
+\end{tabularx}}
+\end{tcolorbox}
+((* endmacro *))
+
+((* macro board_box() *))
+((* if ranked_tasks *))
+\begin{tcolorbox}[colback=boxfillwarm,colframe=mastheadred,boxrule=0.7pt,arc=0pt,
+                   left=3mm,right=3mm,top=2mm,bottom=2mm]
+{\sansfont\footnotesize\bfseries\color{mastheadred}\MakeUppercase{Today's tasks}}\par
+\hrulethin\par\vspace{1.1mm}
+{\sansfont\footnotesize
+((* if in_progress *))
+{\bfseries In progress}\par\smallskip
+((* for task in in_progress *))
+\tickbox\ (( task.title|tex ))\par
+((* endfor *))
+((* endif *))
+((* if pending *))
+((* if in_progress *))\smallskip((* endif *))
+{\bfseries To do}\par\smallskip
+((* for task in pending *))
+\tickbox\ (( task.title|tex ))\par
+((* endfor *))
+((* endif *))
+}
+\end{tcolorbox}
+((* elif edition.desk_note *))
+\begin{tcolorbox}[colback=boxfill,colframe=ink,boxrule=0.5pt,arc=0pt,
+                   left=3mm,right=3mm,top=2mm,bottom=2mm]
+\cardtitle{Today's tasks}
+{\sansfont\footnotesize\itshape (( edition.desk_note|tex ))\par}
+\end{tcolorbox}
+((* endif *))
+((* endmacro *))
+
+((* macro weather_box() *))
+((* if weather *))
+\begin{tcolorbox}[colback=boxfill,colframe=ink,boxrule=0.5pt,arc=0pt,
+                   left=3mm,right=3mm,top=2mm,bottom=2mm]
+\cardtitle{Weather \textbullet\ Islamabad}
+{\sansfont\footnotesize
+{\fontsize{20}{22}\selectfont\bfseries (( weather.temp ))\,$^\circ$C}\ \ (( weather.summary|tex ))\par
+\vspace{1.3mm}
+\begin{tabularx}{\linewidth}{@{}X r@{}}
+((* if weather.feels *))Feels like & (( weather.feels ))$^\circ$C \\((* endif *))
+((* if weather.high *))High / low & (( weather.high ))$^\circ$ / (( weather.low ))$^\circ$ \\((* endif *))
+((* if weather.humidity *))Humidity & (( weather.humidity ))\% \\((* endif *))
+((* if weather.wind *))Wind & (( weather.wind ))\,km/h \\((* endif *))
+((* if weather.sunrise *))Sun & (( weather.sunrise )) --- (( weather.sunset )) \\((* endif *))
+\end{tabularx}
+((* if weather.days *))
+\smallskip\hrulethin\par\vspace{1.1mm}
+\begin{tabularx}{\linewidth}{@{}l X r@{}}
+((* for day in weather.days *))
+(( day.date )) & (( day.summary|tex )) & (( day.high ))$^\circ$/(( day.low ))$^\circ$ \\
+((* endfor *))
+\end{tabularx}
+((* endif *))
+}
+\end{tcolorbox}
+((* endif *))
+((* endmacro *))
+
+((* macro note_box() *))
+((* if reader_note *))
+\begin{tcolorbox}[colback=boxfillwarm,colframe=mastheadred,boxrule=0.7pt,arc=0pt,
+                   left=3mm,right=3mm,top=2mm,bottom=2mm]
+{\sansfont\footnotesize\bfseries\color{mastheadred}\MakeUppercase{A note for your day}}\par
+\hrulethin\par\vspace{1.1mm}
+{\footnotesize\itshape\justifying (( reader_note|tex ))\par}
+\end{tcolorbox}
+((* endif *))
+((* endmacro *))
+
+% The old "The Desk" page reprinted the reader's note (already the rail's
+% note box) and the task list (already the rail's Tasks box), so it was a
+% duplicate page. The desk now lives entirely in the front-page rail.
+
+((* macro lead_head() *))
+((* if lead *))
+\kicker{ (( lead.section|tex )) }
+{\raggedright\headlinefont\bfseries\fontsize{30}{34}\selectfont (( lead.headline|tex ))\par}
+\vspace{2mm}
+((* if lead_image *))
+\photobox{\linewidth}{(( lead_image ))}{(( ((lead.dek + ' ') if lead.dek else '')|tex ))\textit{(( lead.source_name|tex ))}}
+\vspace{2mm}
+((* elif lead.dek *))
+{\sansfont\large (( lead.dek|tex ))\par}
+\vspace{1.5mm}
+((* endif *))
+\byline{ (( lead.byline|tex )) }
+\dateline{ (( edition.date|tex )) }
+((* endif *))
+((* endmacro *))
+
+% The body flows full width in three columns AFTER the headline/rail row.
+% multicols breaks across pages; a minipage does not, which is why the old
+% front page pushed the whole story onto page 2 and ran under the footer.
+((* macro lead_body() *))
+((* if lead and lead.body *))
+\begin{multicols}{3}
+\setlength{\parindent}{12pt}
+((* if lead_drop[0] *))
+\lettrine[lines=3,lraise=0.05,nindent=0pt,slope=0pt]{(( lead_drop[0]|tex ))}{(( lead_drop[1]|tex ))}
+((* else *))
+(( lead.body[0]|tex ))\par
+((* endif *))
+((* for para in lead.body[1:] *))
+(( para|tex ))\par
+((* endfor *))
+\end{multicols}
+{\sansfont\footnotesize Source: (( lead.source_name|tex ))(( lead.id|vote_links ))\par}
+((* endif *))
+((* endmacro *))
+
+% One story inside the two-column flow. Nothing here is a fixed-size box, so
+% stories break across columns and pages and fill the page to its foot. The
+% earlier photo-beside-text minipage was rigid: it could not be split, so any
+% page tail shorter than a whole story was left blank.
+((* macro story(article) *))
+\storytop{ (( article.section|tex )) }{\fontsize{15}{18}\selectfont (( article.headline|tex ))}
+((* if story_images.get(article.id) *))
+\photobox{\linewidth}{(( story_images[article.id] ))}{(( ((article.dek + ' ') if article.dek else '')|tex ))\textit{(( article.source_name|tex ))}}
+\vspace{1.3mm}
+((* elif article.dek *))
+{\sansfont\footnotesize\itshape (( article.dek|tex ))\par}
+\vspace{1.3mm}
+((* endif *))
+\byline{ (( article.byline|tex )) }
+\vspace{1.3mm}
+{\justifying\small
+\setlength{\parindent}{12pt}
+((* for para in article.body *))
+(( para|tex ))\par
+((* endfor *))
+}
+{\sansfont\footnotesize\color{captiongray} Source: (( article.source_name|tex ))(( article.id|vote_links ))\par}
+((* endmacro *))
+
+% The day's discovery topic: one story from a topic the reader never asked for.
+% Photo beside the text keeps the box short enough to sit whole on a page.
+((* macro trial_box() *))
+((* if trial *))
+\needspace{0.22\textheight}
+\begin{tcolorbox}[colback=boxfillwarm,colframe=mastheadred,boxrule=0.7pt,arc=0pt,
+                   left=3mm,right=3mm,top=2mm,bottom=2mm]
+{\sansfont\footnotesize\bfseries\color{mastheadred}\MakeUppercase{Something new \textbullet\ (( trial.section|tex ))}}\par
+\hrulethin\par\vspace{1.1mm}
+((* if trial_image *))
+\begin{minipage}[t]{0.36\linewidth}\vspace{0pt}
+\includegraphics[width=\linewidth]{(( trial_image ))}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.6\linewidth}\vspace{0pt}
+((* endif *))
+{\raggedright\headlinefont\bfseries\fontsize{15}{18}\selectfont (( trial.headline|tex ))\par}
+\vspace{1mm}
+((* if edition.trial_note *))
+{\sansfont\footnotesize\itshape (( edition.trial_note|tex ))\par}
+\vspace{1.3mm}
+((* endif *))
+{\justifying\small
+\setlength{\parindent}{12pt}
+((* for para in trial.body *))
+(( para|tex ))\par
+((* endfor *))
+}
+\vspace{1mm}
+{\sansfont\footnotesize\color{captiongray} Source: (( trial.source_name|tex ))\par}
+\vspace{0.8mm}
+(( trial.id|trial_links ))\par
+((* if trial_image *))
+\end{minipage}
+((* endif *))
+\end{tcolorbox}
+((* endif *))
+((* endmacro *))
+
+% Front page: news on the left, the reader's own day stacked on the right.
+% Both sides are bounded content, so this row always fits above the fold.
+\noindent
+\begin{minipage}[t]{0.63\linewidth}
+((* if lead *))
+(( lead_head() ))
+((* else *))
+{\headlinefont\bfseries\fontsize{22}{26}\selectfont No slate today\par}
+\vspace{2mm}
+{\justifying (( (edition.tagline or 'Gathering failed to produce a story. Check the desk column for what to do next.')|tex ))\par}
+((* endif *))
+% The contents and the note ride under the byline. The rail's height swings with
+% however many meetings and tasks the day holds, and the row is as tall as its
+% taller side, so anything left only in the rail opens a hole under this column.
+% Putting these two here fills that hole and shortens the rail by the same much.
+\vspace{3mm}
+(( inside_box() ))
+\vspace{2.5mm}
+(( note_box() ))
+\end{minipage}\hfill
+\begin{minipage}[t]{0.345\linewidth}
+\railbanner{Your Day}
+(( this_day_box() ))
+\vspace{2.5mm}
+(( board_box() ))
+\vspace{2.5mm}
+(( weather_box() ))
+\end{minipage}
+
+\vspace{3mm}
+(( lead_body() ))
+
+((* if trial *))
+\vspace{4mm}
+(( trial_box() ))
+((* endif *))
+
+((* if secondaries *))
+\vspace{5mm}
+% Reserve the banner plus the opening of its first story, or the banner strands
+% itself at the foot of a page above the story it introduces.
+\needspace{0.18\textheight}
+\sectionbanner{The Paper}{Today's other stories}
+\label{sec:paper}
+\begin{multicols}{2}
+((* for article in secondaries *))
+(( story(article) ))
+((* if not loop.last *))
+\vspace{3mm}\hrulethin\vspace{3mm}
+((* endif *))
+((* endfor *))
+\end{multicols}
+((* endif *))
+
+((* if briefs *))
+\vspace{5mm}
+\needspace{0.20\textheight}
+\sectionbanner{Briefs}{In short}
+\label{sec:briefs}
+\begin{multicols}{2}
+\setlength{\parindent}{0pt}
+((* for article in briefs *))
+\storytop{ (( article.section|tex )) }{\fontsize{13}{16}\selectfont (( article.headline|tex ))}
+((* for para in article.body *))
+{\footnotesize (( para|tex ))\par}
+((* endfor *))
+{\sansfont\footnotesize\color{captiongray} (( article.source_name|tex ))(( article.id|vote_links ))\par}
+((* if not loop.last *))
+\vspace{2mm}\hrulethin\vspace{3mm}
+((* endif *))
+((* endfor *))
+\end{multicols}
+((* endif *))
+
+\end{document}

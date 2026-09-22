@@ -1,0 +1,9 @@
+# Copy to config/profile.yaml (gitignored) and fill in what you are happy to share.
+# Only the discovery agent reads this, to guess one new topic a day you might like.
+# Every field is optional; leave one blank to skip it.
+birthday: 2004-05-12          # age is worked out from this; the date itself is not sent
+gender: ""
+location: Islamabad, Pakistan
+education: ""
+occupation: ""
+hobbies: []                   # anything not already in user.md, e.g. [sketching, film photography]

@@ -1,0 +1,615 @@
+% ============================================================================
+%  THE DAILY HERALD — LaTeX Newspaper Template (pdfLaTeX-compatible)
+% ============================================================================
+%  Compile with pdfLaTeX:
+%      pdflatex -shell-escape newspaper.tex
+%      pdflatex -shell-escape newspaper.tex    (run twice for column balance)
+%
+%  ABOUT THE IMAGES
+%  -----------------
+%  Every photo is pulled from a public URL (Lorem Picsum, https://picsum.photos)
+%  the first time you compile, via the \fetchimg macro below (uses \write18,
+%  hence -shell-escape). Downloaded files are cached in images/ so later
+%  compiles are instant and work offline. If you'd rather not use
+%  -shell-escape (e.g. on Overleaf, which blocks it), just run the included
+%  download_images.sh once yourself, or drag files into images/ manually
+%  with the same names — the macro skips the download when the file already
+%  exists, so plain `xelatex newspaper.tex` then works too.
+%  Swap any URL in the \fetchimg calls for your own image link at any time.
+% ============================================================================
+
+\documentclass[10pt]{article}
+
+% ---------- Page geometry: compact tabloid, sized to fit content ----------
+\usepackage[paperwidth=11in,paperheight=15.5in,
+            top=10mm,bottom=14mm,left=11mm,right=11mm,
+            columnsep=6mm]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage{tabularx}
+\usepackage{lettrine}
+\usepackage{lipsum}
+\usepackage{tikz}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{microtype}
+\usepackage{ragged2e}
+\usepackage{setspace}
+\usepackage[skip=0pt]{parskip}
+
+% ---------- Fonts (Type-1 PostScript fonts — work with plain pdflatex) ----------
+\usepackage{charter}                                   % body copy: Bitstream Charter
+\usepackage{helvet}                                    % sans base: Helvetica
+\renewcommand{\familydefault}{\rmdefault}
+\newcommand{\headlinefont}{\fontfamily{ppl}\selectfont} % headlines / masthead: Palatino
+\newcommand{\sansfont}{\fontfamily{\sfdefault}\selectfont} % kickers, bylines, labels
+
+% ---------- Colour palette ----------
+\definecolor{ink}{HTML}{161616}
+\definecolor{rule}{HTML}{161616}
+\definecolor{hairline}{HTML}{B9B4AA}
+\definecolor{masthead red}{HTML}{9E1B26}
+\definecolor{boxfill}{HTML}{F1EEE6}
+\definecolor{boxfillwarm}{HTML}{F4E9DC}
+\definecolor{captiongray}{HTML}{6E6A62}
+\definecolor{paperbg}{HTML}{FBF9F4}
+
+\pagecolor{paperbg}
+\color{ink}
+
+% ---------- Remote-image helper ----------
+% \fetchimg{URL}{local-filename-in-images/}
+\newcommand{\fetchimg}[2]{%
+  \immediate\write18{mkdir -p images}%
+  \immediate\write18{[ -s "images/#2" ] || curl -sSL "#1" -o "images/#2"}%
+}
+
+% ---------- Header / footer ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.6pt}
+\fancyfoot[C]{\footnotesize\sansfont \thesectionpage\ \ --- \ \papertitle\ \ --- \ \today}
+
+% simple A1/A2/A3... page labels
+\newcommand{\thesectionpage}{}
+\newcommand{\setsectionpage}[1]{\renewcommand{\thesectionpage}{#1}}
+
+% ---------- Masthead text (edit me) ----------
+\newcommand{\papertitle}{THE RAMEEN TIMES}
+\newcommand{\papertagline}{Truth in Every Edition \textbullet\ Established 1925}
+
+% ---------- Small helpers ----------
+\newcommand{\kicker}[1]{{\sansfont\bfseries\small\color{masthead red}\MakeUppercase{#1}}\par\smallskip}
+\newcommand{\byline}[1]{{\sansfont\footnotesize\bfseries #1}\par}
+\newcommand{\dateline}[1]{{\sansfont\footnotesize\itshape #1}\par\smallskip}
+\newcommand{\hrulethin}{\noindent{\color{hairline}\rule{\linewidth}{0.5pt}}\par}
+\newcommand{\hrulethick}{\noindent{\color{rule}\rule{\linewidth}{1.6pt}}\par}
+
+% \photobox{width}{max height}{file}{caption}
+\newcommand{\photobox}[4]{%
+  \noindent\includegraphics[width=#1,height=#2,keepaspectratio]{#3}\par
+  \vspace{-0.5mm}
+  {\color{rule}\rule{#1}{0.4pt}}\par
+  \vspace{0.6mm}
+  {\sansfont\footnotesize\color{captiongray} #4}\par
+}
+
+\newcommand{\sectionbanner}[2]{%
+  \hrulethick\vspace{1.2mm}
+  \noindent{\headlinefont\bfseries\fontsize{30}{34}\selectfont #1}\hfill
+  {\sansfont\small\color{captiongray}#2}\par
+  \vspace{-1.2mm}\hrulethick\vspace{3mm}
+}
+
+\setlength{\columnsep}{6mm}
+\setlength{\columnseprule}{0.4pt}
+\def\columnseprulecolor{\color{hairline}}
+\usepackage{colortbl}
+\arrayrulecolor{hairline}
+
+\begin{document}
+\setlength{\parindent}{14pt}
+\raggedbottom
+
+% ============================================================================
+% PAGE 1 — FRONT PAGE
+% ============================================================================
+\setsectionpage{A1}
+
+% --- top utility line -------------------------------------------------------
+\noindent{\sansfont\footnotesize
+\MakeUppercase{\today} \hfill
+VOL.\ CXLI \textbullet\ NO.\ 214 \hfill
+\MakeUppercase{Morning Edition} \hfill
+\$3.00}
+\par\vspace{1mm}\hrulethin\vspace{2mm}
+
+% --- masthead ----------------------------------------------------------------
+\begin{center}
+  {\headlinefont\bfseries\fontsize{62}{62}\selectfont \papertitle}\\[1mm]
+  {\sansfont\small \papertagline}
+\end{center}
+\vspace{1.5mm}\hrulethick\vspace{0.6mm}\hrulethin\vspace{3mm}
+
+% --- teaser strip --------------------------------------------------------
+\noindent{\sansfont\footnotesize
+\textbf{INSIDE:} Palestine, page A2 \ \textbullet\ \ Culture \& Crafts, page A3 \ \textbullet\ \
+Space, page A4 \ \textbullet\ \ Tech \& AI, page A5 \ \textbullet\ \ Islamabad Folk, page A6}
+\par\vspace{2mm}\hrulethin\vspace{4mm}
+
+% --- main grid: 3 cols lead story + personal dashboard sidebar -------------
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{front-hero.jpg}
+
+\noindent
+\begin{minipage}[t]{0.62\linewidth}\vspace{0pt}
+  \kicker{Humanitarian Update}
+  {\headlinefont\bfseries\fontsize{40}{44}\selectfont\raggedright
+   Aid Convoys Expand Deliveries to Gaza's Northern Districts\par}
+  \vspace{2mm}
+  \photobox{\linewidth}{108mm}{images/front-hero.jpg}{Trucks carrying food and medical supplies queue at a crossing point this week. \textit{Wire Photo}}
+  \vspace{2mm}
+  \byline{By Amina Rashid, Humanitarian Desk}
+  \dateline{GAZA STRIP --- Thursday}
+
+  \begin{multicols}{3}
+  \setlength{\parindent}{12pt}
+  \lettrine[lines=3,lraise=0.05,nindent=0pt,slope=0pt]{R}{elief agencies said }the number of trucks crossing into northern Gaza
+  rose for a third straight day, as coordinators worked to restore delivery routes ahead of the coming
+  winter months. \lipsum[2]
+
+  \lipsum[3]
+
+  \lipsum[4]
+
+  \lipsum[26][1-3]
+  \end{multicols}
+  {\sansfont\footnotesize\itshape Continued on A2}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.34\linewidth}\vspace{0pt}
+  \begin{tcolorbox}[colback=boxfill,colframe=ink,boxrule=0.5pt,arc=0pt,
+                     left=3mm,right=3mm,top=2mm,bottom=2mm]
+    {\headlinefont\bfseries\large TODAY'S MEETINGS}\par
+    \hrulethin\par\smallskip
+    {\sansfont\footnotesize\itshape\color{captiongray} Will sync with Google Calendar}\par
+    \smallskip
+    {\sansfont\footnotesize
+    \begin{tabularx}{\linewidth}{@{}l X@{}}
+      9:00 AM  & Team Standup \\
+      11:30 AM & Client Call --- Cybix \\
+      2:00 PM  & Product Review \\
+      4:30 PM  & 1:1 with Sara \\
+    \end{tabularx}}
+  \end{tcolorbox}
+
+  \vspace{3mm}
+  \begin{tcolorbox}[colback=boxfillwarm,colframe=masthead red,boxrule=0.7pt,arc=0pt,
+                     left=3mm,right=3mm,top=2mm,bottom=2mm]
+    {\sansfont\footnotesize\bfseries\color{masthead red} TASKS}\par
+    \hrulethin\par\smallskip
+    {\sansfont\footnotesize\itshape\color{captiongray} Will sync with Trello}\par
+    \smallskip
+    {\sansfont\footnotesize\bfseries IN PROGRESS}\par
+    {\sansfont\footnotesize
+    \textbullet\ Finalize Q3 proposal\\
+    \textbullet\ Review PR \#482}\par
+    \smallskip
+    {\sansfont\footnotesize\bfseries TO DO}\par
+    {\sansfont\footnotesize
+    \textbullet\ Draft client email\\
+    \textbullet\ Update roadmap doc}
+  \end{tcolorbox}
+
+  \vspace{3mm}
+  \begin{tcolorbox}[colback=boxfill,colframe=ink,boxrule=0.5pt,arc=0pt,
+                     left=3mm,right=3mm,top=2mm,bottom=2mm]
+    {\headlinefont\bfseries\large WEATHER \textbullet\ ISLAMABAD}\par
+    {\sansfont\scriptsize\color{captiongray} Updated Sun 20 Sep, 2:00 AM PKT}\par
+    \hrulethin\par\smallskip
+    {\sansfont\footnotesize\bfseries Clear sky}\par
+    {\sansfont\footnotesize
+    \begin{tabularx}{\linewidth}{@{}X X@{}}
+      Temperature & 22.8\textdegree C \\
+      Feels like  & 25.1\textdegree C \\
+      Humidity    & 73\% \\
+      Cloud cover & 0\% \\
+      Precipitation & 0.0 mm \\
+      Pressure    & 953 hPa \\
+      Wind        & 2.7 km/h NW \\
+      Gusts       & 7.2 km/h \\
+    \end{tabularx}}
+    \smallskip\hrulethin\smallskip
+    {\sansfont\footnotesize\bfseries TODAY'S HOURLY} \ {\sansfont\scriptsize\itshape\color{captiongray}(every 2 hrs; clear all day, mainly clear 4 PM)}\par
+    \smallskip
+    {\sansfont\scriptsize
+    \begin{tabularx}{\linewidth}{@{}l X X@{}}
+      Time & Temp & Feels \\ \hline
+      12 AM & 22.8\textdegree & 25.8\textdegree \\
+      2 AM  & 22.8\textdegree & 25.1\textdegree \\
+      4 AM  & 22.1\textdegree & 24.4\textdegree \\
+      6 AM  & 20.6\textdegree & 22.3\textdegree \\
+      8 AM  & 23.8\textdegree & 25.9\textdegree \\
+      10 AM & 28.1\textdegree & 30.0\textdegree \\
+      12 PM & 30.4\textdegree & 34.2\textdegree \\
+      2 PM  & 31.4\textdegree & 34.5\textdegree \\
+      4 PM  & 31.0\textdegree & 32.9\textdegree \\
+      6 PM  & 27.4\textdegree & 29.7\textdegree \\
+      8 PM  & 24.9\textdegree & 26.9\textdegree \\
+      10 PM & 23.6\textdegree & 25.8\textdegree \\
+    \end{tabularx}}
+    \smallskip\hrulethin\smallskip
+    {\sansfont\footnotesize\bfseries 7-DAY FORECAST}\par
+    \smallskip
+    {\sansfont\scriptsize
+    \begin{tabularx}{\linewidth}{@{}l X r r@{}}
+      Day & Conditions & Lo/Hi & Rain \\ \hline
+      Today, 20 Sep & Mainly clear   & 21/31\textdegree & 0\% \\
+      Mon, 21 Sep   & Mainly clear   & 21/32\textdegree & 0\% \\
+      Tue, 22 Sep   & Light drizzle  & 22/33\textdegree & 0\% \\
+      Wed, 23 Sep   & Partly cloudy  & 22/32\textdegree & 2\% \\
+      Thu, 24 Sep   & Light drizzle  & 22/31\textdegree & 29\% \\
+      Fri, 25 Sep   & Light drizzle  & 22/32\textdegree & 15\% \\
+      Sat, 26 Sep   & Clear sky      & 22/32\textdegree & 9\% \\
+    \end{tabularx}}
+    \smallskip
+    {\sansfont\footnotesize Sunrise 5:54 AM \ \textbullet\ \ Sunset 6:07 PM \ \textbullet\ \ UV 6.8}\par
+    {\sansfont\scriptsize\color{captiongray} Data: Open-Meteo}
+  \end{tcolorbox}
+
+  \vspace{3mm}
+  \begin{tcolorbox}[colback=boxfillwarm,colframe=masthead red,boxrule=0.7pt,arc=0pt,
+                     left=3mm,right=3mm,top=2mm,bottom=2mm]
+    {\headlinefont\bfseries\large A NOTE FOR YOUR DAY}\par
+    {\sansfont\scriptsize\itshape\color{captiongray} Written fresh each morning}\par
+    \hrulethin\par\smallskip
+    {\small\itshape Good morning --- four meetings on the books today, so let the 9\,AM standup be your coffee's alarm clock. Islamabad's handing us a clear, warm one, peaking near 31\textdegree C, so if the 2\,PM review wraps early, take the long way back from lunch. Top of this morning's wire: aid convoys are pushing deeper into northern Gaza, a small bit of good news worth the full read on A2. Whatever the inbox throws at you today, you've talked your way through harder meetings than this one.\par
+    \smallskip
+    \textbf{Today's joke:} Why don't scientists trust atoms? Because they make up everything.}
+  \end{tcolorbox}
+\end{minipage}
+
+\vfill
+\hrulethin
+
+\clearpage
+% ============================================================================
+% PAGE 2 — PALESTINE
+% ============================================================================
+\setsectionpage{A2}
+\sectionbanner{PALESTINE}{Humanitarian Aid, Reconstruction \& Culture}
+
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{palestine-main.jpg}
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{palestine-brief1.jpg}
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{palestine-brief2.jpg}
+
+\noindent
+\begin{minipage}[t]{0.66\linewidth}\vspace{0pt}
+  \kicker{Reconstruction}
+  {\headlinefont\bfseries\fontsize{32}{35}\selectfont\raggedright
+   Rebuilding Begins in Gaza City's Old Quarter as Families Return\par}
+  \vspace{2mm}
+  \photobox{\linewidth}{95mm}{images/palestine-main.jpg}{Workers clear rubble from a residential block ahead of reconstruction. \textit{Wire Photo}}
+  \vspace{2mm}
+  \byline{By Amina Rashid, Humanitarian Desk}
+  \dateline{GAZA CITY --- Wednesday}
+
+  \begin{multicols}{3}
+  \setlength{\parindent}{12pt}
+  \lettrine[lines=3,lraise=0.05,nindent=0pt,slope=0pt]{E}{ngineers began }surveying damaged foundations this week, part of an early-phase
+  reconstruction effort coordinated with local municipal authorities and international partners. \lipsum[6]
+
+  \lipsum[7]
+
+  \lipsum[8][1-4]
+
+  \lipsum[20]
+  \end{multicols}
+
+  \vspace{4mm}\hrulethin\vspace{3mm}
+  \kicker{Palestinian Voices}
+  {\headlinefont\bfseries\fontsize{22}{25}\selectfont\raggedright Young Photographers Document Daily Life in Rafah\par}
+  \vspace{1mm}
+  \begin{multicols}{3}
+  \setlength{\parindent}{12pt}
+  \lipsum[22][1-3]
+  \end{multicols}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.30\linewidth}\vspace{0pt}
+  \kicker{Culture}
+  {\headlinefont\bfseries\fontsize{18}{21}\selectfont\raggedright West Bank Weavers Preserve Traditional Tatreez Embroidery\par}
+  \photobox{\linewidth}{55mm}{images/palestine-brief1.jpg}{A weaver works on a tatreez pattern in a Hebron workshop. \textit{Staff Photo}}
+  {\justifying\footnotesize\lipsum[9][1-2]\par}
+
+  \vspace{3mm}\hrulethin\vspace{2mm}
+
+  \kicker{Aid \& Logistics}
+  {\headlinefont\bfseries\fontsize{18}{21}\selectfont\raggedright UN Agency Reopens Second Water Treatment Facility\par}
+  \photobox{\linewidth}{55mm}{images/palestine-brief2.jpg}{Technicians inspect newly restored filtration units. \textit{Staff Photo}}
+  {\justifying\footnotesize\lipsum[10][1-2]\par}
+
+  \vspace{3mm}
+  \begin{tcolorbox}[colback=boxfill,colframe=ink,boxrule=0.5pt,arc=0pt,
+                     left=3mm,right=3mm,top=2mm,bottom=2mm]
+    {\sansfont\footnotesize\bfseries VOICES FROM THE GROUND}\par
+    \hrulethin\par\smallskip
+    {\headlinefont\itshape\normalsize ``Every truck that gets through means another clinic can reopen.''}\par
+    \smallskip{\sansfont\footnotesize --- Aid Coordinator, Regional Relief Office}
+  \end{tcolorbox}
+\end{minipage}
+
+\vfill\hrulethin
+
+\clearpage
+% ============================================================================
+% PAGE 3 — CULTURE & CRAFTS
+% ============================================================================
+\setsectionpage{A3}
+\sectionbanner{CULTURE \& CRAFTS}{South Asian Artisans \& Traditional Craft}
+
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{culture-main.jpg}
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{culture-brief1.jpg}
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{culture-brief2.jpg}
+
+\kicker{Desi Crafts}
+{\headlinefont\bfseries\fontsize{34}{37}\selectfont\raggedright
+ Sindh's Ajrak Printers Pass Down a Centuries-Old Block-Print Tradition\par}
+\vspace{2mm}
+\photobox{\linewidth}{100mm}{images/culture-main.jpg}{A printer stamps natural-dye blocks onto cotton cloth in a Hala workshop. \textit{Staff Photo}}
+\vspace{2mm}
+
+\noindent
+\begin{minipage}[t]{0.62\linewidth}\vspace{0pt}
+  \byline{By Sara Baig, Arts \& Culture}
+  \dateline{HALA, SINDH --- Monday}
+  \begin{multicols}{2}
+  \setlength{\parindent}{12pt}
+  \lettrine[lines=3,lraise=0.05,nindent=0pt,slope=0pt]{I}{n a narrow lane }of workshops, artisans still cut and carve printing
+  blocks by hand, a technique passed down through generations of the same families. \lipsum[16]
+
+  \lipsum[17][1-4]
+  \end{multicols}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.34\linewidth}\vspace{0pt}
+  \begin{tcolorbox}[colback=boxfill,colframe=ink,boxrule=0.5pt,arc=0pt,
+                     left=3mm,right=3mm,top=2mm,bottom=2mm]
+    {\sansfont\footnotesize\bfseries CRAFT DETAILS}\par
+    \hrulethin\par\smallskip
+    {\sansfont\footnotesize
+    \begin{tabularx}{\linewidth}{@{}X r@{}}
+      Technique        & Natural-dye block print \\
+      Tradition age     & 500+ years \\
+      Workshops in area & \textasciitilde 40 \\
+      Best visited      & Weekday mornings \\
+    \end{tabularx}}
+  \end{tcolorbox}
+\end{minipage}
+
+\vspace{5mm}\hrulethin\vspace{3mm}
+{\headlinefont\bfseries\large MORE FROM THE WORKSHOPS}\par\vspace{2mm}
+
+\noindent
+\begin{minipage}[t]{0.48\linewidth}\vspace{0pt}
+  \photobox{\linewidth}{65mm}{images/culture-brief1.jpg}{A painter finishes a floral panel on a Karachi workshop floor. \textit{Staff Photo}}
+  {\headlinefont\bfseries\fontsize{16}{19}\selectfont\raggedright Karachi Workshops Keep Truck Art Tradition on the Road\par}
+  {\sansfont\footnotesize\bfseries Karachi \ \textbullet\ \ Working workshops \ \textbullet\ \ Visits by request}\par
+  {\justifying\small\lipsum[18][1-2]\par}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}\vspace{0pt}
+  \photobox{\linewidth}{65mm}{images/culture-brief2.jpg}{A finished blue pottery vase cools beside the kiln. \textit{Staff Photo}}
+  {\headlinefont\bfseries\fontsize{16}{19}\selectfont\raggedright Multan's Blue Pottery Kilns Stay Lit Through Generations\par}
+  {\sansfont\footnotesize\bfseries Multan \ \textbullet\ \ Family-run kilns \ \textbullet\ \ Visits by request}\par
+  {\justifying\small\lipsum[19][1-2]\par}
+\end{minipage}
+
+\vfill\hrulethin
+
+\clearpage
+% ============================================================================
+% PAGE 4 — SPACE
+% ============================================================================
+\setsectionpage{A4}
+\sectionbanner{SPACE}{Missions, Astronomy \& the Sky This Week}
+
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{space-main.jpg}
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{space-brief1.jpg}
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{space-brief2.jpg}
+
+\noindent
+\begin{minipage}[t]{0.66\linewidth}\vspace{0pt}
+  \kicker{Missions}
+  {\headlinefont\bfseries\fontsize{32}{35}\selectfont\raggedright
+   New Telescope Data Reveals Atmosphere of Distant Exoplanet\par}
+  \vspace{2mm}
+  \photobox{\linewidth}{95mm}{images/space-main.jpg}{An artist's rendering of the exoplanet based on the latest spectral data. \textit{Mission Handout}}
+  \vspace{2mm}
+  \byline{By Daniyal Farooq, Science Desk}
+  \dateline{PASADENA, CALIF. --- Tuesday}
+
+  \begin{multicols}{3}
+  \setlength{\parindent}{12pt}
+  \lettrine[lines=3,lraise=0.05,nindent=0pt,slope=0pt]{M}{ission scientists }said new spectral readings show signs of water vapor
+  in the atmosphere of a planet orbiting a star roughly 120 light-years away. \lipsum[11]
+
+  \lipsum[12]
+
+  \lipsum[13][1-4]
+
+  \lipsum[21]
+  \end{multicols}
+
+  \vspace{4mm}\hrulethin\vspace{3mm}
+  \kicker{Lunar Exploration}
+  {\headlinefont\bfseries\fontsize{22}{25}\selectfont\raggedright Lunar Lander Begins Extended Science Mission at South Pole\par}
+  \vspace{1mm}
+  \begin{multicols}{3}
+  \setlength{\parindent}{12pt}
+  \lipsum[23][1-3]
+  \end{multicols}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.30\linewidth}\vspace{0pt}
+  \begin{tcolorbox}[colback=boxfillwarm,colframe=masthead red,boxrule=0.7pt,arc=0pt,
+                     left=3mm,right=3mm,top=2mm,bottom=2mm]
+    {\sansfont\footnotesize\bfseries\color{masthead red} BY THE NUMBERS}\par
+    \hrulethin\par\smallskip
+    {\headlinefont\bfseries\fontsize{22}{22}\selectfont 120}\par
+    {\small light-years from Earth to the exoplanet studied in the new observations.}
+  \end{tcolorbox}
+
+  \vspace{3mm}
+  \kicker{Sky Watch}
+  {\headlinefont\bfseries\fontsize{18}{21}\selectfont\raggedright Meteor Shower Peaks This Weekend\par}
+  \photobox{\linewidth}{55mm}{images/space-brief1.jpg}{A long-exposure image from last year's peak activity. \textit{Staff Photo}}
+  {\justifying\footnotesize\lipsum[14][1-2]\par}
+
+  \vspace{3mm}\hrulethin\vspace{2mm}
+  \kicker{Astronomy}
+  {\headlinefont\bfseries\fontsize{18}{21}\selectfont\raggedright Astronomers Catalogue Rare Binary Star System\par}
+  \photobox{\linewidth}{55mm}{images/space-brief2.jpg}{The binary system as captured by a ground-based observatory. \textit{Observatory Photo}}
+  {\justifying\footnotesize\lipsum[15][1-2]\par}
+\end{minipage}
+
+\vfill\hrulethin
+
+\clearpage
+% ============================================================================
+% PAGE 5 — TECH & AI
+% ============================================================================
+\setsectionpage{A5}
+\sectionbanner{TECH \& AI}{Research, Tools \& Open Source}
+
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{tech-main.jpg}
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{tech-brief1.jpg}
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{tech-brief2.jpg}
+
+\noindent
+\begin{minipage}[t]{0.66\linewidth}\vspace{0pt}
+  \kicker{Open Source}
+  {\headlinefont\bfseries\fontsize{32}{35}\selectfont\raggedright
+   Open-Weight Model Release Narrows Gap With Closed Systems, Researchers Say\par}
+  \vspace{2mm}
+  \photobox{\linewidth}{95mm}{images/tech-main.jpg}{A research team reviews benchmark results ahead of the model's release. \textit{Staff Photo}}
+  \vspace{2mm}
+  \byline{By Zara Ahmed, Technology Desk}
+  \dateline{SAN FRANCISCO --- Monday}
+
+  \begin{multicols}{3}
+  \setlength{\parindent}{12pt}
+  \lettrine[lines=3,lraise=0.05,nindent=0pt,slope=0pt]{A}{n independent research }collective released open model weights this week,
+  along with training notes and evaluation code, in a bid to keep pace with closed commercial systems. \lipsum[6]
+
+  \lipsum[7]
+
+  \lipsum[8][1-4]
+
+  \lipsum[24]
+  \end{multicols}
+
+  \vspace{4mm}\hrulethin\vspace{3mm}
+  \kicker{Developer Tools}
+  {\headlinefont\bfseries\fontsize{22}{25}\selectfont\raggedright Local-First AI Tools Gain Traction Among Independent Developers\par}
+  \vspace{1mm}
+  \begin{multicols}{3}
+  \setlength{\parindent}{12pt}
+  \lipsum[25][1-3]
+  \end{multicols}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.30\linewidth}\vspace{0pt}
+  \kicker{Research}
+  {\headlinefont\bfseries\fontsize{18}{21}\selectfont\raggedright Study Finds Efficiency Gains in Smaller Fine-Tuned Models\par}
+  \photobox{\linewidth}{55mm}{images/tech-brief1.jpg}{Researchers compare model outputs during evaluation. \textit{Staff Photo}}
+  {\justifying\footnotesize\lipsum[9][1-2]\par}
+
+  \vspace{3mm}\hrulethin\vspace{2mm}
+  \kicker{Industry}
+  {\headlinefont\bfseries\fontsize{18}{21}\selectfont\raggedright Open-Source Collective Releases Reasoning Benchmark Suite\par}
+  \photobox{\linewidth}{55mm}{images/tech-brief2.jpg}{A dashboard tracks submissions to the new benchmark. \textit{Staff Photo}}
+  {\justifying\footnotesize\lipsum[10][1-2]\par}
+
+  \vspace{3mm}
+  \begin{tcolorbox}[colback=boxfill,colframe=ink,boxrule=0.5pt,arc=0pt,
+                     left=3mm,right=3mm,top=2mm,bottom=2mm]
+    {\sansfont\footnotesize\bfseries QUOTE OF THE DAY}\par
+    \hrulethin\par\smallskip
+    {\headlinefont\itshape\normalsize ``Smaller, open models mean more people can actually inspect how the system works.''}\par
+    \smallskip{\sansfont\footnotesize --- Research Lead, Open-Source AI Collective}
+  \end{tcolorbox}
+\end{minipage}
+
+\vfill\hrulethin
+
+\clearpage
+% ============================================================================
+% PAGE 6 — ISLAMABAD FOLK
+% ============================================================================
+\setsectionpage{A6}
+\sectionbanner{ISLAMABAD FOLK}{Galleries, Bazaars \& City Culture}
+
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{islamabad-main.jpg}
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{islamabad-brief1.jpg}
+\fetchimg{https://cdn.britannica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg}{islamabad-brief2.jpg}
+
+\noindent
+\begin{minipage}[t]{0.66\linewidth}\vspace{0pt}
+  \kicker{Galleries}
+  {\headlinefont\bfseries\fontsize{32}{35}\selectfont\raggedright
+   Islamabad's Satrang Gallery Opens New Season with Miniature Painting Showcase\par}
+  \vspace{2mm}
+  \photobox{\linewidth}{95mm}{images/islamabad-main.jpg}{Visitors view new work at Satrang Gallery's F-6 space this week. \textit{Photo: ArtNow}}
+  \vspace{2mm}
+  \byline{By Hina Yousuf, City Desk}
+  \dateline{ISLAMABAD --- Thursday}
+
+  \begin{multicols}{3}
+  \setlength{\parindent}{12pt}
+  \lettrine[lines=3,lraise=0.05,nindent=0pt,slope=0pt]{T}{he gallery's }new season opened quietly this week, with a small crowd
+  gathering under the F-6 space's skylights for a first look at the season's miniature painting showcase. \lipsum[27]
+
+  \lipsum[28]
+
+  \lipsum[29][1-4]
+  \end{multicols}
+
+  \vspace{4mm}\hrulethin\vspace{3mm}
+  \kicker{Folk Music}
+  {\headlinefont\bfseries\fontsize{22}{25}\selectfont\raggedright Saidpur Village Draws Crowds for Islamabad's Winter Folk Nights\par}
+  \vspace{1mm}
+  \begin{multicols}{3}
+  \setlength{\parindent}{12pt}
+  \lipsum[30][1-3]
+  \end{multicols}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.30\linewidth}\vspace{0pt}
+  \kicker{Bazaars}
+  {\headlinefont\bfseries\fontsize{18}{21}\selectfont\raggedright Lok Virsa's Winter Bazaar Returns to Islamabad's Shakarparian\par}
+  \photobox{\linewidth}{55mm}{images/islamabad-brief1.jpg}{Craft stalls fill the Shakarparian grounds ahead of opening day. \textit{Photo: Youlin}}
+  {\justifying\footnotesize\lipsum[31][1-2]\par}
+
+  \vspace{3mm}\hrulethin\vspace{2mm}
+  \kicker{City Culture}
+  {\headlinefont\bfseries\fontsize{18}{21}\selectfont\raggedright Kuch Khaas Hosts Weekly Open Mic for Islamabad Poets and Musicians\par}
+  \photobox{\linewidth}{55mm}{images/islamabad-brief2.jpg}{A performer takes the stage during a recent open mic night. \textit{Staff Photo}}
+  {\justifying\footnotesize\lipsum[32][1-2]\par}
+
+  \vspace{3mm}
+  \begin{tcolorbox}[colback=boxfill,colframe=ink,boxrule=0.5pt,arc=0pt,
+                     left=3mm,right=3mm,top=2mm,bottom=2mm]
+    {\sansfont\footnotesize\bfseries AROUND ISLAMABAD THIS WEEK}\par
+    \hrulethin\par\smallskip
+    {\sansfont\footnotesize
+    \begin{tabularx}{\linewidth}{@{}X r@{}}
+      PNCA --- new exhibition opens        & Fri \\
+      Satrang --- miniature painting talk  & Sat \\
+      Kuch Khaas --- open mic night        & Thu \\
+      Lok Virsa --- winter bazaar          & Sat--Sun \\
+    \end{tabularx}}
+  \end{tcolorbox}
+\end{minipage}
+
+\vfill\hrulethin
+
+\end{document}

@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% set page = "trends" %}
+{% block title %}Your taste · The Rameen Times{% endblock %}
+{% block style %}
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .stat { border-top: 2px solid var(--ink); padding-top: 6px; }
+  .stat b { display: block; font-size: 30px; line-height: 1.1; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+  .chartbox { position: relative; height: 280px; }
+  table { width: 100%; border-collapse: collapse; font: 14px var(--sans); }
+  th, td { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--rule); }
+  th { font-size: 12px; text-transform: uppercase; color: var(--muted); letter-spacing: .05em; }
+  td.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .up { color: var(--up); } .down { color: var(--down); }
+  .empty { color: var(--muted); font: italic 15px var(--serif); }
+  .topics { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+  .topic { border-top: 1px solid var(--rule); padding: 8px 0; }
+  .topic b { font-size: 17px; }
+  .topic .why { font-size: 14px; margin: 2px 0 6px; }
+  .btn { font: 600 12px var(--sans); text-decoration: none; border: 1px solid var(--rule); padding: 3px 10px; border-radius: 4px; }
+  .btn:hover { border-color: var(--ink); }
+{% endblock %}
+{% block body %}
+<div class="stats">
+  <div class="stat"><b>{{ summary.stories }}</b><span class="muted">stories printed</span></div>
+  <div class="stat"><b>{{ summary.votes }}</b><span class="muted">votes</span></div>
+  <div class="stat"><b class="up">{{ summary.up }}</b><span class="muted">more</span></div>
+  <div class="stat"><b class="down">{{ summary.down }}</b><span class="muted">less</span></div>
+</div>
+
+<h2 class="banner" id="topics">Topics you're trying</h2>
+<p class="muted">Every morning the paper adds one topic you never asked for. <b>more</b> on its story keeps it, <b>less</b> bans it, and no vote lets it go for now. Up to {{ max_adopted }} kept at once.</p>
+<div class="topics">
+  <div>
+    <div class="kicker">On trial</div>
+    {% for t in topics.get('trial', []) %}
+    <div class="topic"><b>{{ t.label }}</b><div class="why">{{ t.why }}</div><span class="muted">{{ t.trial_date }}</span></div>
+    {% else %}<p class="empty">No trial topic yet.</p>{% endfor %}
+  </div>
+  <div>
+    <div class="kicker">Kept ({{ topics.get('adopted', [])|length }} of {{ max_adopted }})</div>
+    {% for t in topics.get('adopted', []) %}
+    <div class="topic"><b>{{ t.label }}</b><div class="why">{{ t.why }}</div><a class="btn" href="/topic/{{ t.slug }}/drop">Drop</a></div>
+    {% else %}<p class="empty">Nothing kept yet.</p>{% endfor %}
+    {% for t in topics.get('waiting', []) %}
+    <div class="topic"><b>{{ t.label }}</b> <span class="muted">liked, waiting for a free slot</span><div class="why">{{ t.why }}</div>
+      {% if topics.get('adopted', [])|length < max_adopted %}<a class="btn" href="/topic/{{ t.slug }}/adopt">Swap in</a>{% else %}<span class="muted">Drop a kept topic to swap this in.</span> <a class="btn" href="/topic/{{ t.slug }}/drop">Not for me</a>{% endif %}</div>
+    {% endfor %}
+  </div>
+  <div>
+    <div class="kicker">Said no to</div>
+    {% for t in topics.get('rejected', []) %}
+    <div class="topic"><b>{{ t.label }}</b> <a class="btn" href="/topic/{{ t.slug }}/undo">Undo</a></div>
+    {% else %}<p class="empty">Nothing rejected.</p>{% endfor %}
+    {% if topics.get('skipped') %}<p class="muted">Let go without a vote: {{ topics['skipped']|map(attribute='label')|join(', ') }}. These may come back after 90 days.</p>{% endif %}
+  </div>
+</div>
+
+<h2 class="banner">Topics, week by week</h2>
+{% if summary.weeks %}
+<div class="two">
+  <div><div class="muted">Stories you marked <b>more</b>, per week</div><div class="chartbox"><canvas id="likes"></canvas></div></div>
+  <div><div class="muted">Like rate per topic (smoothed)</div><div class="chartbox"><canvas id="rate"></canvas></div></div>
+</div>
+{% else %}
+<p class="empty">Nothing printed yet.</p>
+{% endif %}
+
+<h2 class="banner">Themes on the move</h2>
+<div class="two">
+  <div>
+    <div class="kicker">Rising · last 4 weeks vs the 4 before</div>
+    {% if summary.shift.rising %}
+    <table><tr><th>Theme</th><th class="n">Before</th><th class="n">Now</th></tr>
+    {% for r in summary.shift.rising %}<tr><td>{{ r.theme }}</td><td class="n">{{ r.previous }}</td><td class="n up">{{ r.recent }}</td></tr>{% endfor %}
+    </table>
+    {% else %}<p class="empty">Nothing rising yet.</p>{% endif %}
+  </div>
+  <div>
+    <div class="kicker">Fading</div>
+    {% if summary.shift.fading %}
+    <table><tr><th>Theme</th><th class="n">Before</th><th class="n">Now</th></tr>
+    {% for r in summary.shift.fading %}<tr><td>{{ r.theme }}</td><td class="n">{{ r.previous }}</td><td class="n down">{{ r.recent }}</td></tr>{% endfor %}
+    </table>
+    {% else %}<p class="empty">Nothing fading yet.</p>{% endif %}
+  </div>
+</div>
+
+<h2 class="banner">All-time themes</h2>
+{% if summary.top_themes %}
+<table><tr><th>Theme</th><th class="n">More</th><th class="n">Less</th></tr>
+{% for r in summary.top_themes %}<tr><td>{{ r.theme }}</td><td class="n up">{{ r.up }}</td><td class="n down">{{ r.down }}</td></tr>{% endfor %}
+</table>
+{% else %}<p class="empty">Vote on a few stories and your themes appear here.</p>{% endif %}
+
+{% if summary.weeks %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function () {
+  if (!window.Chart) return;
+  const weeks = {{ chart|safe }};
+  const labels = {{ labels|safe }};
+  const colors = { "palestine": "#2f6f4e", "art-crafts": "#c0762a", "islamabad-folk": "#7a4e9e", "space": "#2b5c9e", "tech-ai": "#9e1b26" };
+  const spare = ["#5b8a8a", "#b0892a", "#8a5b6e", "#4f6a2f"];
+  Object.keys(labels).filter(t => !colors[t]).forEach((t, i) => { colors[t] = spare[i % spare.length]; });
+  const css = getComputedStyle(document.documentElement);
+  const ink = css.getPropertyValue("--muted").trim();
+  const grid = css.getPropertyValue("--rule").trim();
+  Chart.defaults.color = ink;
+  Chart.defaults.font.family = "Helvetica Neue, Arial, sans-serif";
+  const x = weeks.map(w => w.week);
+  const topics = Object.keys(labels);
+  new Chart(document.getElementById("likes"), {
+    type: "bar",
+    data: { labels: x, datasets: topics.map(t => ({ label: labels[t], data: weeks.map(w => w.topics[t].up), backgroundColor: colors[t] })) },
+    options: { maintainAspectRatio: false, scales: { x: { grid: { color: grid }, stacked: true }, y: { grid: { color: grid }, stacked: true, beginAtZero: true, ticks: { precision: 0 } } }, plugins: { legend: { position: "bottom" } } }
+  });
+  new Chart(document.getElementById("rate"), {
+    type: "line",
+    data: { labels: x, datasets: topics.map(t => ({ label: labels[t], data: weeks.map(w => w.topics[t].shown ? w.topics[t].rate : null), borderColor: colors[t], backgroundColor: colors[t], tension: 0.3, spanGaps: true })) },
+    options: { maintainAspectRatio: false, scales: { x: { grid: { color: grid } }, y: { grid: { color: grid }, min: 0, max: 1, ticks: { callback: v => Math.round(v * 100) + "%" } } }, plugins: { legend: { position: "bottom" } } }
+  });
+})();
+</script>
+{% endif %}
+{% endblock %}

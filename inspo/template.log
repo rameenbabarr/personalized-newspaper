@@ -1,0 +1,1244 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  20 SEP 2026 02:31
+entering extended mode
+ \write18 enabled.
+ %&-line parsing enabled.
+**/Users/hash/personal-newspaper/inspo/template.tex
+(/Users/hash/personal-newspaper/inspo/template.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-01-19>
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count275
+\c@section=\count276
+\c@subsection=\count277
+\c@subsubsection=\count278
+\c@paragraph=\count279
+\c@subparagraph=\count280
+\c@figure=\count281
+\c@table=\count282
+\abovecaptionskip=\skip49
+\belowcaptionskip=\skip50
+\bibindent=\dimen148
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+))
+\Gm@cnth=\count283
+\Gm@cntv=\count284
+\c@Gm@tempcnt=\count285
+\Gm@bindingoffset=\dimen149
+\Gm@wd@mp=\dimen150
+\Gm@odd@mp=\dimen151
+\Gm@even@mp=\dimen152
+\Gm@layoutwidth=\dimen153
+\Gm@layoutheight=\dimen154
+\Gm@layouthoffset=\dimen155
+\Gm@layoutvoffset=\dimen156
+\Gm@dimlist=\toks18
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2024/02/08 v1.3d Input encoding file
+\inpenc@prehook=\toks19
+\inpenc@posthook=\toks20
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 106.
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen157
+\Gin@req@width=\dimen158
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/tools/multicol.sty
+Package: multicol 2025/10/21 v2.0b multicolumn formatting (FMi)
+\c@tracingmulticols=\count286
+\mult@box=\box53
+\multicol@leftmargin=\dimen159
+\c@unbalance=\count287
+\c@collectmore=\count288
+\doublecol@number=\count289
+\multicoltolerance=\count290
+\multicolpretolerance=\count291
+\full@width=\dimen160
+\page@free=\dimen161
+\premulticols=\dimen162
+\postmulticols=\dimen163
+\multicolsep=\skip51
+\multicolbaselineskip=\skip52
+\partial@page=\box54
+\last@line=\box55
+\mc@boxedresult=\box56
+\maxbalancingoverflow=\dimen164
+\mult@rightbox=\box57
+\mult@grightbox=\box58
+\mult@firstbox=\box59
+\mult@gfirstbox=\box60
+\@tempa=\box61
+\@tempa=\box62
+\@tempa=\box63
+\@tempa=\box64
+\@tempa=\box65
+\@tempa=\box66
+\@tempa=\box67
+\@tempa=\box68
+\@tempa=\box69
+\@tempa=\box70
+\@tempa=\box71
+\@tempa=\box72
+\@tempa=\box73
+\@tempa=\box74
+\@tempa=\box75
+\@tempa=\box76
+\@tempa=\box77
+\@tempa=\box78
+\@tempa=\box79
+\@tempa=\box80
+\@tempa=\box81
+\@tempa=\box82
+\@tempa=\box83
+\@tempa=\box84
+\@tempa=\box85
+\@tempa=\box86
+\@tempa=\box87
+\@tempa=\box88
+\@tempa=\box89
+\@tempa=\box90
+\@tempa=\box91
+\@tempa=\box92
+\@tempa=\box93
+\@tempa=\box94
+\@tempa=\box95
+\@tempa=\box96
+\c@minrows=\count292
+\c@columnbadness=\count293
+\c@finalcolumnbadness=\count294
+\last@try=\dimen165
+\multicolovershoot=\dimen166
+\multicolundershoot=\dimen167
+\mult@nat@firstbox=\box97
+\colbreak@box=\box98
+\mc@col@check@num=\count295
+\g__mc_curr_col_int=\count296
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/tools/array.sty
+Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
+\col@sep=\dimen168
+\ar@mcellbox=\box99
+\extrarowheight=\dimen169
+\NC@list=\toks21
+\extratabsurround=\skip53
+\backup@length=\skip54
+\ar@cellbox=\box100
+)
+\TX@col@width=\dimen170
+\TX@old@table=\dimen171
+\TX@old@col=\dimen172
+\TX@target=\dimen173
+\TX@delta=\dimen174
+\TX@cols=\count297
+\TX@ftn=\toks22
+)
+(/Users/hash/Library/texmf/tex/latex/lettrine/lettrine.sty
+File: lettrine.sty 2025-12-06 v2.83 (Daniel Flipo)
+\c@DefaultLines=\count298
+\c@DefaultDepth=\count299
+\DefaultFindent=\dimen175
+\DefaultNindent=\dimen176
+\DefaultSlope=\dimen177
+\DiscardVskip=\dimen178
+\L@lbox=\box101
+\c@L@lines=\count300
+\c@L@depth=\count301
+\L@Pindent=\dimen179
+\L@Findent=\dimen180
+\L@Nindent=\dimen181
+\L@lraise=\dimen182
+\L@first=\dimen183
+\L@next=\dimen184
+\L@slope=\dimen185
+\L@height=\dimen186
+\L@novskip=\dimen187
+\L@target@ht=\dimen188
+\L@target@dp=\dimen189
+\L@target@tht=\dimen190
+\LettrineWidth=\dimen191
+\LettrineHeight=\dimen192
+\LettrineDepth=\dimen193
+\L@finalht=\dimen194
+\L@finaldp=\dimen195
+
+Loading lettrine.cfg
+(/Users/hash/Library/texmf/tex/latex/lettrine/lettrine.cfg)
+\Lettrine@tweaks=\toks23
+\Llist@everypar=\toks24
+)
+(/Users/hash/Library/texmf/tex/latex/lipsum/lipsum.sty
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e
+.sty (/usr/local/texlive/2026basic/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2026-01-19 L3 programming layer (loader) 
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/l3backend/l3backend-pdftex.d
+ef
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count302
+))
+Package: l3keys2e 2025-10-09 LaTeX2e option processing using LaTeX3 keys
+)
+Package: lipsum 2021-09-20 v2.7 150 paragraphs of Lorem Ipsum dummy text
+\g__lipsum_par_int=\count303
+\l__lipsum_a_int=\count304
+\l__lipsum_b_int=\count305
+ (/Users/hash/Library/texmf/tex/latex/lipsum/lipsum.ltd.tex))
+(/Users/hash/Library/texmf/tex/latex/pgf/frontendlayer/tikz.sty
+(/Users/hash/Library/texmf/tex/latex/pgf/basiclayer/pgf.sty
+(/Users/hash/Library/texmf/tex/latex/pgf/utilities/pgfrcs.sty
+(/Users/hash/Library/texmf/tex/generic/pgf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks25
+\pgfutil@tempdima=\dimen196
+\pgfutil@tempdimb=\dimen197
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box102
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/utilities/pgfrcs.code.tex
+(/Users/hash/Library/texmf/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2026-08-01 v3.1.12 (3.1.12)
+))
+Package: pgf 2026-08-01 v3.1.12 (3.1.12)
+
+(/Users/hash/Library/texmf/tex/latex/pgf/basiclayer/pgfcore.sty
+(/Users/hash/Library/texmf/tex/latex/pgf/systemlayer/pgfsys.sty
+(/Users/hash/Library/texmf/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2026-08-01 v3.1.12 (3.1.12)
+
+(/Users/hash/Library/texmf/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks26
+\pgfkeys@temptoks=\toks27
+
+(/Users/hash/Library/texmf/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.cod
+e.tex
+\pgfkeys@tmptoks=\toks28
+))
+\pgf@x=\dimen198
+\pgf@y=\dimen199
+\pgf@xa=\dimen256
+\pgf@ya=\dimen257
+\pgf@xb=\dimen258
+\pgf@yb=\dimen259
+\pgf@xc=\dimen260
+\pgf@yc=\dimen261
+\pgf@xd=\dimen262
+\pgf@yd=\dimen263
+\w@pgf@writea=\write3
+\r@pgf@reada=\read2
+\c@pgf@counta=\count306
+\c@pgf@countb=\count307
+\c@pgf@countc=\count308
+\c@pgf@countd=\count309
+\t@pgf@toka=\toks29
+\t@pgf@tokb=\toks30
+\t@pgf@tokc=\toks31
+\pgf@sys@id@count=\count310
+ (/Users/hash/Library/texmf/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2026-08-01 v3.1.12 (3.1.12)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(/Users/hash/Library/texmf/tex/generic/pgf/systemlayer/pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2026-08-01 v3.1.12 (3.1.12)
+
+(/Users/hash/Library/texmf/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2026-08-01 v3.1.12 (3.1.12)
+))) (/Users/hash/Library/texmf/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.
+tex
+File: pgfsyssoftpath.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfsyssoftpath@smallbuffer@items=\count311
+\pgfsyssoftpath@bigbuffer@items=\count312
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)) (/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2026-08-01 v3.1.12 (3.1.12)
+
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmath.code.tex
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathutil.code.tex)
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen264
+\pgfmath@count=\count313
+\pgfmath@box=\box103
+\pgfmath@toks=\toks32
+\pgfmath@stack@operand=\toks33
+\pgfmath@stack@operation=\toks34
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathfunctions.code.tex)
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathfunctions.trigonometric.
+code.tex)
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathfunctions.random.code.te
+x)
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathfunctions.comparison.cod
+e.tex)
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathfunctions.base.code.tex)
+
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathfunctions.round.code.tex
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex)
+
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathfunctions.integerarithme
+tics.code.tex)
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathcalc.code.tex)
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count314
+))
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfint.code.tex)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@picminx=\dimen265
+\pgf@picmaxx=\dimen266
+\pgf@picminy=\dimen267
+\pgf@picmaxy=\dimen268
+\pgf@pathminx=\dimen269
+\pgf@pathmaxx=\dimen270
+\pgf@pathminy=\dimen271
+\pgf@pathmaxy=\dimen272
+\pgf@xx=\dimen273
+\pgf@xy=\dimen274
+\pgf@yx=\dimen275
+\pgf@yy=\dimen276
+\pgf@zx=\dimen277
+\pgf@zy=\dimen278
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code
+.tex
+File: pgfcorepathconstruct.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@path@lastx=\dimen279
+\pgf@path@lasty=\dimen280
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@shorten@end@additional=\dimen281
+\pgf@shorten@start@additional=\dimen282
+) (/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfpic=\box104
+\pgf@hbox=\box105
+\pgf@layerbox@main=\box106
+\pgf@picture@serial@count=\count315
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.
+tex
+File: pgfcoregraphicstate.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgflinewidth=\dimen283
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcoretransformations.co
+de.tex
+File: pgfcoretransformations.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@pt@x=\dimen284
+\pgf@pt@y=\dimen285
+\pgf@pt@temp=\dimen286
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcorepathprocessing.cod
+e.tex
+File: pgfcorepathprocessing.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfarrowsep=\dimen287
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@max=\dimen288
+\pgf@sys@shading@range@num=\count316
+\pgf@shadingcount=\count317
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfexternal@startupbox=\box107
+) (/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcoretransparency.code.
+tex
+File: pgfcoretransparency.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2026-08-01 v3.1.12 (3.1.12)
+) (/Users/hash/Library/texmf/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)))
+(/Users/hash/Library/texmf/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfnodeparttextbox=\box108
+)
+(/Users/hash/Library/texmf/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)
+(/Users/hash/Library/texmf/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2026-08-01 v3.1.12 (3.1.12)
+\pgf@nodesepstart=\dimen289
+\pgf@nodesepend=\dimen290
+)
+(/Users/hash/Library/texmf/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2026-08-01 v3.1.12 (3.1.12)
+)) (/Users/hash/Library/texmf/tex/latex/pgf/utilities/pgffor.sty
+(/Users/hash/Library/texmf/tex/latex/pgf/utilities/pgfkeys.sty
+(/Users/hash/Library/texmf/tex/generic/pgf/utilities/pgfkeys.code.tex))
+(/Users/hash/Library/texmf/tex/latex/pgf/math/pgfmath.sty
+(/Users/hash/Library/texmf/tex/generic/pgf/math/pgfmath.code.tex))
+(/Users/hash/Library/texmf/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2026-08-01 v3.1.12 (3.1.12)
+\pgffor@iter=\dimen291
+\pgffor@skip=\dimen292
+\pgffor@stack=\toks35
+\pgffor@toks=\toks36
+))
+(/Users/hash/Library/texmf/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2026-08-01 v3.1.12 (3.1.12)
+
+(/Users/hash/Library/texmf/tex/generic/pgf/libraries/pgflibraryplothandlers.cod
+e.tex
+File: pgflibraryplothandlers.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgf@plot@mark@count=\count318
+\pgfplotmarksize=\dimen293
+)
+\tikz@lastx=\dimen294
+\tikz@lasty=\dimen295
+\tikz@lastxsaved=\dimen296
+\tikz@lastysaved=\dimen297
+\tikz@lastmovetox=\dimen298
+\tikz@lastmovetoy=\dimen299
+\tikzleveldistance=\dimen300
+\tikzsiblingdistance=\dimen301
+\tikz@figbox=\box109
+\tikz@figbox@bg=\box110
+\tikz@tempbox=\box111
+\tikz@tempbox@bg=\box112
+\tikztreelevel=\count319
+\tikznumberofchildren=\count320
+\tikznumberofcurrentchild=\count321
+\tikz@fig@count=\count322
+
+(/Users/hash/Library/texmf/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2026-08-01 v3.1.12 (3.1.12)
+\pgfmatrixcurrentrow=\count323
+\pgfmatrixcurrentcolumn=\count324
+\pgf@matrix@numberofcolumns=\count325
+)
+\tikz@expandcount=\count326
+
+(/Users/hash/Library/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlib
+rarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2026-08-01 v3.1.12 (3.1.12)
+)))
+(/Users/hash/Library/texmf/tex/latex/tcolorbox/tcolorbox.sty
+Package: tcolorbox 2026/05/28 version 6.10.0 text color boxes
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2024-01-22 v1.5x LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks37
+\verbatim@line=\toks38
+\verbatim@in@stream=\read3
+)
+(/Users/hash/Library/texmf/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(/Users/hash/Library/texmf/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+)
+\@envbody=\toks39
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count327
+)
+\tcb@titlebox=\box113
+\tcb@upperbox=\box114
+\tcb@lowerbox=\box115
+\tcb@phantombox=\box116
+\c@tcbbreakpart=\count328
+\c@tcblayer=\count329
+\c@tcolorbox@number=\count330
+\l__tcobox_tmpa_box=\box117
+\l__tcobox_tmpa_dim=\dimen302
+\tcb@temp=\box118
+\tcb@temp=\box119
+\tcb@temp=\box120
+\tcb@temp=\box121
+
+(/Users/hash/Library/texmf/tex/latex/tcolorbox/tcbraster.code.tex
+Library (tcolorbox): 'tcbraster.code.tex' version '6.10.0'
+\c@tcbrastercolumn=\count331
+\c@tcbrasterrow=\count332
+\c@tcbrasternum=\count333
+\c@tcbraster=\count334
+) (/Users/hash/Library/texmf/tex/latex/tcolorbox/tcbskins.code.tex
+Library (tcolorbox): 'tcbskins.code.tex' version '6.10.0'
+(/Users/hash/Library/texmf/tex/latex/tikzfill/tikzfill.image.sty
+Package: tikzfill.image 2026/04/23 v1.2.0 Image filling library for TikZ
+
+(/Users/hash/Library/texmf/tex/latex/tikzfill/tikzlibraryfill.image.code.tex
+File: tikzlibraryfill.image.code.tex 2026/04/23 v1.2.0 Image filling library
+\l__tikzfill_tmpa_dim=\dimen303
+\l__tikzfill_tmpb_dim=\dimen304
+\l__tikzfill_img_box=\box122
+))
+(/Users/hash/Library/texmf/tex/latex/tcolorbox/tcbskinsjigsaw.code.tex
+Library (tcolorbox): 'tcbskinsjigsaw.code.tex' version '6.10.0'
+)) (/Users/hash/Library/texmf/tex/latex/tcolorbox/tcbbreakable.code.tex
+Library (tcolorbox): 'tcbbreakable.code.tex' version '6.10.0'
+(/Users/hash/Library/texmf/tex/latex/pdfcol/pdfcol.sty
+Package: pdfcol 2026-06-20 v1.8 Handle new color stacks for pdfTeX (HO)
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+))
+Package pdfcol Info: New color stack `tcb@breakable' = 1 on input line 23.
+\tcb@testbox=\box123
+\tcb@totalupperbox=\box124
+\tcb@totallowerbox=\box125
+) (/Users/hash/Library/texmf/tex/latex/tcolorbox/tcbhooks.code.tex
+Library (tcolorbox): 'tcbhooks.code.tex' version '6.10.0'
+) (/Users/hash/Library/texmf/tex/latex/tcolorbox/tcbtheorems.code.tex
+Library (tcolorbox): 'tcbtheorems.code.tex' version '6.10.0'
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2025/07/09 v2.17z AMS math features
+\@mathmargin=\skip55
+
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2024/11/17 v2.01 AMS text
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks40
+\ex@=\dimen305
+))
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen306
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count335
+LaTeX Info: Redefining \frac on input line 233.
+\uproot@=\count336
+\leftroot@=\count337
+LaTeX Info: Redefining \overline on input line 398.
+LaTeX Info: Redefining \colon on input line 409.
+\classnum@=\count338
+\DOTSCASE@=\count339
+LaTeX Info: Redefining \ldots on input line 495.
+LaTeX Info: Redefining \dots on input line 498.
+LaTeX Info: Redefining \cdots on input line 619.
+\Mathstrutbox@=\box126
+\strutbox@=\box127
+LaTeX Info: Redefining \big on input line 721.
+LaTeX Info: Redefining \Big on input line 722.
+LaTeX Info: Redefining \bigg on input line 723.
+LaTeX Info: Redefining \Bigg on input line 724.
+\big@size=\dimen307
+LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
+\macc@depth=\count340
+LaTeX Info: Redefining \bmod on input line 904.
+LaTeX Info: Redefining \pmod on input line 909.
+LaTeX Info: Redefining \smash on input line 939.
+LaTeX Info: Redefining \relbar on input line 969.
+LaTeX Info: Redefining \Relbar on input line 970.
+\c@MaxMatrixCols=\count341
+\dotsspace@=\muskip17
+\c@parentequation=\count342
+\dspbrk@lvl=\count343
+\tag@help=\toks41
+\row@=\count344
+\column@=\count345
+\maxfields@=\count346
+\andhelp@=\toks42
+\eqnshift@=\dimen308
+\alignsep@=\dimen309
+\tagshift@=\dimen310
+\tagwidth@=\dimen311
+\totwidth@=\dimen312
+\lineht@=\dimen313
+\@envbody=\toks43
+\multlinegap=\skip56
+\multlinetaggap=\skip57
+\mathdisplay@stack=\toks44
+LaTeX Info: Redefining \[ on input line 2950.
+LaTeX Info: Redefining \] on input line 2951.
+))
+(/Users/hash/Library/texmf/tex/latex/tcolorbox/tcbfitting.code.tex
+Library (tcolorbox): 'tcbfitting.code.tex' version '6.10.0'
+\tcbfitdim=\dimen314
+\tcb@lowerfitdim=\dimen315
+\tcb@upperfitdim=\dimen316
+\tcb@cur@hbadness=\count347
+) (/Users/hash/Library/texmf/tex/latex/tcolorbox/tcblistingsutf8.code.tex
+Library (tcolorbox): 'tcblistingsutf8.code.tex' version '6.10.0'
+(/Users/hash/Library/texmf/tex/latex/tcolorbox/tcblistings.code.tex
+Library (tcolorbox): 'tcblistings.code.tex' version '6.10.0'
+(/Users/hash/Library/texmf/tex/latex/listings/listings.sty
+\lst@mode=\count348
+\lst@gtempboxa=\box128
+\lst@token=\toks45
+\lst@length=\count349
+\lst@currlwidth=\dimen317
+\lst@column=\count350
+\lst@pos=\count351
+\lst@lostspace=\dimen318
+\lst@width=\dimen319
+\lst@newlines=\count352
+\lst@lineno=\count353
+\lst@maxwidth=\dimen320
+
+(/Users/hash/Library/texmf/tex/latex/listings/lstpatch.sty
+File: lstpatch.sty 2025/11/14 1.11b (Carsten Heinz)
+)
+(/Users/hash/Library/texmf/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
+\c@lstnumber=\count354
+\lst@skipnumbers=\count355
+\lst@framebox=\box129
+)
+(/Users/hash/Library/texmf/tex/latex/listings/listings.cfg
+File: listings.cfg 2025/11/14 1.11b listings configuration
+))
+Package: listings 2025/11/14 1.11b (Carsten Heinz)
+
+==> First Aid for listings.sty no longer applied!
+    Expected:
+        2024/09/23 1.10c (Carsten Heinz)
+    but found:
+        2025/11/14 1.11b (Carsten Heinz)
+    so I'm assuming it got fixed.
+(/Users/hash/Library/texmf/tex/latex/tcolorbox/tcblistingscore.code.tex
+Library (tcolorbox): 'tcblistingscore.code.tex' version '6.10.0'
+(/Users/hash/Library/texmf/tex/latex/tcolorbox/tcbprocessing.code.tex
+Library (tcolorbox): 'tcbprocessing.code.tex' version '6.10.0'
+)
+\c@tcblisting=\count356
+)) (/Users/hash/Library/texmf/tex/latex/listingsutf8/listingsutf8.sty
+Package: listingsutf8 2019-12-10 v1.5 Allow UTF-8 in listings input (HO)
+
+(/Users/hash/Library/texmf/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+)))) (/Users/hash/Library/texmf/tex/latex/tcolorbox/tcbexternal.code.tex
+Library (tcolorbox): 'tcbexternal.code.tex' version '6.10.0'
+) (/Users/hash/Library/texmf/tex/latex/tcolorbox/tcbmagazine.code.tex
+Library (tcolorbox): 'tcbmagazine.code.tex' version '6.10.0'
+) (/Users/hash/Library/texmf/tex/latex/tcolorbox/tcbvignette.code.tex
+Library (tcolorbox): 'tcbvignette.code.tex' version '6.10.0'
+
+(/Users/hash/Library/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlib
+raryfadings.code.tex
+File: tikzlibraryfadings.code.tex 2026-08-01 v3.1.12 (3.1.12)
+
+(/Users/hash/Library/texmf/tex/generic/pgf/libraries/pgflibraryfadings.code.tex
+File: pgflibraryfadings.code.tex 2026-08-01 v3.1.12 (3.1.12)
+))) (/Users/hash/Library/texmf/tex/latex/tcolorbox/tcbposter.code.tex
+Library (tcolorbox): 'tcbposter.code.tex' version '6.10.0'
+)) (/Users/hash/Library/texmf/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2025/02/06 v3.11 Customized lists
+\labelindent=\skip58
+\enit@outerparindent=\dimen321
+\enit@toks=\toks46
+\enit@inbox=\box130
+\enit@count@id=\count357
+\enitdp@description=\count358
+)
+(/Users/hash/Library/texmf/tex/latex/fancyhdr/fancyhdr.sty
+Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
+
+\f@nch@headwidth=\skip59
+\f@nch@offset@elh=\skip60
+\f@nch@offset@erh=\skip61
+\f@nch@offset@olh=\skip62
+\f@nch@offset@orh=\skip63
+\f@nch@offset@elf=\skip64
+\f@nch@offset@erf=\skip65
+\f@nch@offset@olf=\skip66
+\f@nch@offset@orf=\skip67
+\f@nch@height=\skip68
+\f@nch@footalignment=\skip69
+\f@nch@widthL=\skip70
+\f@nch@widthC=\skip71
+\f@nch@widthR=\skip72
+\@temptokenb=\toks47
+)
+(/Users/hash/Library/texmf/tex/latex/microtype/microtype.sty
+Package: microtype 2026/03/01 v3.2d Micro-typographical refinements (RS)
+\MT@toks=\toks48
+\MT@tempbox=\box131
+\MT@count=\count359
+LaTeX Info: Redefining \noprotrusionifhmode on input line 1084.
+LaTeX Info: Redefining \leftprotrusion on input line 1085.
+\MT@prot@toks=\toks49
+LaTeX Info: Redefining \rightprotrusion on input line 1104.
+LaTeX Info: Redefining \textls on input line 1449.
+\MT@outer@kern=\dimen322
+LaTeX Info: Redefining \microtypecontext on input line 2053.
+LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
+\MT@listname@count=\count360
+
+(/Users/hash/Library/texmf/tex/latex/microtype/microtype-pdftex.def
+File: microtype-pdftex.def 2026/03/01 v3.2d Definitions specific to pdftex (RS)
+
+LaTeX Info: Redefining \lsstyle on input line 944.
+LaTeX Info: Redefining \lslig on input line 944.
+\MT@outer@space=\skip73
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+
+(/Users/hash/Library/texmf/tex/latex/microtype/microtype.cfg
+File: microtype.cfg 2026/03/01 v3.2d microtype main configuration file (RS)
+)
+LaTeX Info: Redefining \microtypesetup on input line 3065.
+)
+(/Users/hash/Library/texmf/tex/latex/ragged2e/ragged2e.sty
+Package: ragged2e 2023/06/22 v3.6 ragged2e Package
+\CenteringLeftskip=\skip74
+\RaggedLeftLeftskip=\skip75
+\RaggedRightLeftskip=\skip76
+\CenteringRightskip=\skip77
+\RaggedLeftRightskip=\skip78
+\RaggedRightRightskip=\skip79
+\CenteringParfillskip=\skip80
+\RaggedLeftParfillskip=\skip81
+\RaggedRightParfillskip=\skip82
+\JustifyingParfillskip=\skip83
+\CenteringParindent=\skip84
+\RaggedLeftParindent=\skip85
+\RaggedRightParindent=\skip86
+\JustifyingParindent=\skip87
+)
+(/Users/hash/Library/texmf/tex/latex/setspace/setspace.sty
+Package: setspace 2022/12/04 v6.7b set line spacing
+)
+(/Users/hash/Library/texmf/tex/latex/parskip/parskip.sty
+Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+)))
+(/Users/hash/Library/texmf/tex/latex/psnfss/charter.sty
+Package: charter 2020/03/25 PSNFSS-v9.3 (P.Dyballa) 
+)
+(/Users/hash/Library/texmf/tex/latex/psnfss/helvet.sty
+Package: helvet 2020/03/25 PSNFSS-v9.3 (WaS) 
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2024/10/29 v1.0k Color table columns (DPC)
+\everycr=\toks50
+\minrowclearance=\skip88
+\rownum=\count361
+)
+LaTeX Font Info:    Trying to load font information for T1+bch on input line 11
+6.
+
+(/Users/hash/Library/texmf/tex/latex/psnfss/t1bch.fd
+File: t1bch.fd 2004/10/18 font definitions for T1/bch.
+)
+(/Users/hash/personal-newspaper/inspo/template.aux)
+\openout1 = `template.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: custom
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(31.29802pt, 732.37395pt, 31.29802pt)
+* v-part:(T,H,B)=(28.45274pt, 1051.8984pt, 39.83385pt)
+* \paperwidth=794.96999pt
+* \paperheight=1120.185pt
+* \textwidth=732.37395pt
+* \textheight=1051.8984pt
+* \oddsidemargin=-40.97197pt
+* \evensidemargin=-40.97197pt
+* \topmargin=-80.81725pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=17.07164pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count362
+\scratchdimen=\dimen323
+\scratchbox=\box132
+\nofMPsegments=\count363
+\nofMParguments=\count364
+\everyMPshowfont=\toks51
+\MPscratchCnt=\count365
+\MPscratchDim=\dimen324
+\MPnumerator=\count366
+\makeMPintoPDFobject=\count367
+\everyMPtoPDFconversion=\toks52
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.s
+ty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+\c@lstlisting=\count368
+LaTeX Info: Redefining \microtypecontext on input line 116.
+Package microtype Info: Applying patch `item' on input line 116.
+Package microtype Info: Applying patch `toc' on input line 116.
+Package microtype Info: Applying patch `eqnum' on input line 116.
+Package microtype Info: Applying patch `footnote' on input line 116.
+Package microtype Info: Applying patch `verbatim' on input line 116.
+LaTeX Info: Redefining \microtypesetup on input line 116.
+Package microtype Info: Generating PDF output.
+Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Using default protrusion set `alltext'.
+Package microtype Info: Automatic font expansion enabled (level 2),
+(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
+Package microtype Info: Using default expansion set `alltext-nott'.
+Package microtype Info: Patching command `\showhyphens'.
+Package microtype Info: No adjustment of tracking.
+Package microtype Info: No adjustment of interword spacing.
+Package microtype Info: No adjustment of character kerning.
+ (/Users/hash/Library/texmf/tex/latex/microtype/mt-bch.cfg
+File: mt-bch.cfg 2007/03/03 v1.5 microtype config. file: Bitstream Charter (RS)
+
+)
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 12
+6.
+
+(/Users/hash/Library/texmf/tex/latex/psnfss/t1phv.fd
+File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `phv' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Trying to load font information for TS1+phv on input line 1
+28.
+
+(/Users/hash/Library/texmf/tex/latex/psnfss/ts1phv.fd
+File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `phv' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Font Info:    Trying to load font information for T1+ppl on input line 13
+5.
+
+(/Users/hash/Library/texmf/tex/latex/psnfss/t1ppl.fd
+File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
+)
+(/Users/hash/Library/texmf/tex/latex/microtype/mt-ppl.cfg
+File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
+)
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/front-hero.jpg" ] || curl -sSL "https://cdn.britannica.c
+om/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg" -o
+ "images/front-hero.jpg")...executed.
+
+<images/front-hero.jpg, id=41, 1606.0pt x 1071.00125pt>
+File: images/front-hero.jpg Graphic file (type jpg)
+<use images/front-hero.jpg>
+Package pdftex.def Info: images/front-hero.jpg  used on input line 155.
+(pdftex.def)             Requested size: 454.06343pt x 302.80354pt.
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <8> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 155.
+Package lettrine.sty Info: Targeted height = 29.54498pt
+(lettrine.sty)             (for loversize=0, accent excluded),
+(lettrine.sty)             Lettrine height = 29.54483pt (R);
+(lettrine.sty)             reported on input line 162.
+
+
+Package lipsum Warning: Unknown language 'latin'. Hyphenation patterns for
+(lipsum)                'english' will be used instead.
+
+
+Underfull \hbox (badness 6559) in paragraph at lines 167--167
+[]\T1/bch/m/n/10 (+20) Nulla male-suada port-ti-tor
+ []
+
+(/Users/hash/Library/texmf/tex/latex/microtype/mt-cmr.cfg)
+LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 2
+11.
+
+(/Users/hash/Library/texmf/tex/latex/psnfss/ts1ppl.fd
+File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
+)
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 227.
+LaTeX Font Info:    Trying to load font information for TS1+bch on input line 2
+70.
+
+(/Users/hash/Library/texmf/tex/latex/psnfss/ts1bch.fd
+File: ts1bch.fd 2004/10/18 font definitions for TS1/bch.
+) [1
+
+{/Users/hash/Library/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex
+.map}{/usr/local/texlive/2026basic/texmf-dist/fonts/enc/dvips/base/8r.enc} </Us
+ers/hash/personal-newspaper/inspo/images/front-hero.jpg>]
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/palestine-main.jpg" ] || curl -sSL "https://cdn.britanni
+ca.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg
+" -o "images/palestine-main.jpg")...executed.
+
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/palestine-brief1.jpg" ] || curl -sSL "https://cdn.britan
+nica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.j
+pg" -o "images/palestine-brief1.jpg")...executed.
+
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/palestine-brief2.jpg" ] || curl -sSL "https://cdn.britan
+nica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.j
+pg" -o "images/palestine-brief2.jpg")...executed.
+
+<images/palestine-main.jpg, id=53, 1606.0pt x 1071.00125pt>
+File: images/palestine-main.jpg Graphic file (type jpg)
+<use images/palestine-main.jpg>
+Package pdftex.def Info: images/palestine-main.jpg  used on input line 296.
+(pdftex.def)             Requested size: 405.32188pt x 270.29903pt.
+Package lettrine.sty Info: Targeted height = 29.54498pt
+(lettrine.sty)             (for loversize=0, accent excluded),
+(lettrine.sty)             Lettrine height = 29.54483pt (E);
+(lettrine.sty)             reported on input line 303.
+<images/palestine-brief1.jpg, id=54, 1606.0pt x 1071.00125pt>
+File: images/palestine-brief1.jpg Graphic file (type jpg)
+<use images/palestine-brief1.jpg>
+Package pdftex.def Info: images/palestine-brief1.jpg  used on input line 325.
+(pdftex.def)             Requested size: 219.6923pt x 146.5073pt.
+<images/palestine-brief2.jpg, id=55, 1606.0pt x 1071.00125pt>
+File: images/palestine-brief2.jpg Graphic file (type jpg)
+<use images/palestine-brief2.jpg>
+Package pdftex.def Info: images/palestine-brief2.jpg  used on input line 332.
+(pdftex.def)             Requested size: 219.6923pt x 146.5073pt.
+ [2
+
+ <./images/palestine-main.jpg> <./images/palestine-brief1.jpg> <./images/palest
+ine-brief2.jpg>]
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/culture-main.jpg" ] || curl -sSL "https://cdn.britannica
+.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg" 
+-o "images/culture-main.jpg")...executed.
+
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/culture-brief1.jpg" ] || curl -sSL "https://cdn.britanni
+ca.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg
+" -o "images/culture-brief1.jpg")...executed.
+
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/culture-brief2.jpg" ] || curl -sSL "https://cdn.britanni
+ca.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg
+" -o "images/culture-brief2.jpg")...executed.
+
+<images/culture-main.jpg, id=60, 1606.0pt x 1071.00125pt>
+File: images/culture-main.jpg Graphic file (type jpg)
+<use images/culture-main.jpg>
+Package pdftex.def Info: images/culture-main.jpg  used on input line 362.
+(pdftex.def)             Requested size: 426.66623pt x 284.53304pt.
+
+Overfull \hbox (14.0pt too wide) in paragraph at lines 362--362
+[][][] 
+ []
+
+Package lettrine.sty Info: Targeted height = 29.54498pt
+(lettrine.sty)             (for loversize=0, accent excluded),
+(lettrine.sty)             Lettrine height = 29.54483pt (I);
+(lettrine.sty)             reported on input line 371.
+<images/culture-brief1.jpg, id=61, 1606.0pt x 1071.00125pt>
+File: images/culture-brief1.jpg Graphic file (type jpg)
+<use images/culture-brief1.jpg>
+Package pdftex.def Info: images/culture-brief1.jpg  used on input line 397.
+(pdftex.def)             Requested size: 277.32936pt x 184.94402pt.
+<images/culture-brief2.jpg, id=62, 1606.0pt x 1071.00125pt>
+File: images/culture-brief2.jpg Graphic file (type jpg)
+<use images/culture-brief2.jpg>
+Package pdftex.def Info: images/culture-brief2.jpg  used on input line 403.
+(pdftex.def)             Requested size: 277.32936pt x 184.94402pt.
+[3
+
+ <./images/culture-main.jpg> <./images/culture-brief1.jpg> <./images/culture-br
+ief2.jpg>]
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/space-main.jpg" ] || curl -sSL "https://cdn.britannica.c
+om/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg" -o
+ "images/space-main.jpg")...executed.
+
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/space-brief1.jpg" ] || curl -sSL "https://cdn.britannica
+.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg" 
+-o "images/space-brief1.jpg")...executed.
+
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/space-brief2.jpg" ] || curl -sSL "https://cdn.britannica
+.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg" 
+-o "images/space-brief2.jpg")...executed.
+
+<images/space-main.jpg, id=66, 1606.0pt x 1071.00125pt>
+File: images/space-main.jpg Graphic file (type jpg)
+<use images/space-main.jpg>
+Package pdftex.def Info: images/space-main.jpg  used on input line 428.
+(pdftex.def)             Requested size: 405.32188pt x 270.29903pt.
+Package lettrine.sty Info: Targeted height = 29.54498pt
+(lettrine.sty)             (for loversize=0, accent excluded),
+(lettrine.sty)             Lettrine height = 29.54483pt (M);
+(lettrine.sty)             reported on input line 435.
+
+Underfull \hbox (badness 10000) in paragraph at lines 435--437
+\T1/bch/m/n/10 (+20) new spec-tral read-ings
+ []
+
+<images/space-brief1.jpg, id=67, 1606.0pt x 1071.00125pt>
+File: images/space-brief1.jpg Graphic file (type jpg)
+<use images/space-brief1.jpg>
+Package pdftex.def Info: images/space-brief1.jpg  used on input line 466.
+(pdftex.def)             Requested size: 219.6923pt x 146.5073pt.
+<images/space-brief2.jpg, id=68, 1606.0pt x 1071.00125pt>
+File: images/space-brief2.jpg Graphic file (type jpg)
+<use images/space-brief2.jpg>
+Package pdftex.def Info: images/space-brief2.jpg  used on input line 472.
+(pdftex.def)             Requested size: 219.6923pt x 146.5073pt.
+[4
+
+ <./images/space-main.jpg> <./images/space-brief1.jpg> <./images/space-brief2.j
+pg>]
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/tech-main.jpg" ] || curl -sSL "https://cdn.britannica.co
+m/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg" -o 
+"images/tech-main.jpg")...executed.
+
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/tech-brief1.jpg" ] || curl -sSL "https://cdn.britannica.
+com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg" -
+o "images/tech-brief1.jpg")...executed.
+
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/tech-brief2.jpg" ] || curl -sSL "https://cdn.britannica.
+com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg" -
+o "images/tech-brief2.jpg")...executed.
+
+<images/tech-main.jpg, id=72, 1606.0pt x 1071.00125pt>
+File: images/tech-main.jpg Graphic file (type jpg)
+<use images/tech-main.jpg>
+Package pdftex.def Info: images/tech-main.jpg  used on input line 495.
+(pdftex.def)             Requested size: 405.32188pt x 270.29903pt.
+Package lettrine.sty Info: Targeted height = 29.54498pt
+(lettrine.sty)             (for loversize=0, accent excluded),
+(lettrine.sty)             Lettrine height = 29.54483pt (A);
+(lettrine.sty)             reported on input line 502.
+
+Underfull \hbox (badness 10000) in paragraph at lines 502--504
+\T1/bch/m/n/10 (+20) col-lec-tive re-leased open
+ []
+
+<images/tech-brief1.jpg, id=73, 1606.0pt x 1071.00125pt>
+File: images/tech-brief1.jpg Graphic file (type jpg)
+<use images/tech-brief1.jpg>
+Package pdftex.def Info: images/tech-brief1.jpg  used on input line 524.
+(pdftex.def)             Requested size: 219.6923pt x 146.5073pt.
+<images/tech-brief2.jpg, id=74, 1606.0pt x 1071.00125pt>
+File: images/tech-brief2.jpg Graphic file (type jpg)
+<use images/tech-brief2.jpg>
+Package pdftex.def Info: images/tech-brief2.jpg  used on input line 530.
+(pdftex.def)             Requested size: 219.6923pt x 146.5073pt.
+[5
+
+ <./images/tech-main.jpg> <./images/tech-brief1.jpg> <./images/tech-brief2.jpg>
+]
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/islamabad-main.jpg" ] || curl -sSL "https://cdn.britanni
+ca.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.jpg
+" -o "images/islamabad-main.jpg")...executed.
+
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/islamabad-brief1.jpg" ] || curl -sSL "https://cdn.britan
+nica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.j
+pg" -o "images/islamabad-brief1.jpg")...executed.
+
+runsystem(mkdir -p images)...executed.
+
+runsystem([ -s "images/islamabad-brief2.jpg" ] || curl -sSL "https://cdn.britan
+nica.com/82/274082-050-311FA7BA/angel-oak-tree-in-Johns-Island-South-Carolina.j
+pg" -o "images/islamabad-brief2.jpg")...executed.
+
+<images/islamabad-main.jpg, id=78, 1606.0pt x 1071.00125pt>
+File: images/islamabad-main.jpg Graphic file (type jpg)
+<use images/islamabad-main.jpg>
+Package pdftex.def Info: images/islamabad-main.jpg  used on input line 562.
+(pdftex.def)             Requested size: 405.32188pt x 270.29903pt.
+Package lettrine.sty Info: Targeted height = 29.54498pt
+(lettrine.sty)             (for loversize=0, accent excluded),
+(lettrine.sty)             Lettrine height = 29.54483pt (T);
+(lettrine.sty)             reported on input line 569.
+
+Underfull \hbox (badness 10000) in paragraph at lines 574--575
+[]\T1/bch/m/n/10 (+20) Cras dapibus, au-gue quis
+ []
+
+<images/islamabad-brief1.jpg, id=79, 1606.0pt x 1071.00125pt>
+File: images/islamabad-brief1.jpg Graphic file (type jpg)
+<use images/islamabad-brief1.jpg>
+Package pdftex.def Info: images/islamabad-brief1.jpg  used on input line 589.
+(pdftex.def)             Requested size: 219.6923pt x 146.5073pt.
+<images/islamabad-brief2.jpg, id=80, 1606.0pt x 1071.00125pt>
+File: images/islamabad-brief2.jpg Graphic file (type jpg)
+<use images/islamabad-brief2.jpg>
+Package pdftex.def Info: images/islamabad-brief2.jpg  used on input line 595.
+(pdftex.def)             Requested size: 219.6923pt x 146.5073pt.
+[6
+
+ <./images/islamabad-main.jpg> <./images/islamabad-brief1.jpg> <./images/islama
+bad-brief2.jpg>] (/Users/hash/personal-newspaper/inspo/template.aux)
+ ***********
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-01-19>
+ ***********
+ ) 
+Here is how much of TeX's memory you used:
+ 25591 strings out of 469006
+ 541970 string characters out of 5454814
+ 1097230 words of memory out of 5000000
+ 53535 multiletter control sequences out of 15000+600000
+ 715836 words of font info for 281 fonts, out of 8000000 for 9000
+ 319 hyphenation exceptions out of 8191
+ 92i,13n,98p,1042b,637s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</Users/hash/Library/texmf/fonts/type1/bitstrea/charter/bchbi8a.pfb></Users/h
+ash/Library/texmf/fonts/type1/bitstrea/charter/bchr8a.pfb></Users/hash/Library/
+texmf/fonts/type1/bitstrea/charter/bchri8a.pfb></Users/hash/Library/texmf/fonts
+/type1/urw/helvetic/uhvb8a.pfb></Users/hash/Library/texmf/fonts/type1/urw/helve
+tic/uhvr8a.pfb></Users/hash/Library/texmf/fonts/type1/urw/helvetic/uhvro8a.pfb>
+</Users/hash/Library/texmf/fonts/type1/urw/palatino/uplb8a.pfb></Users/hash/Lib
+rary/texmf/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on /Users/hash/personal-newspaper/inspo/template.pdf (6 pages, 1
+1354788 bytes).
+PDF statistics:
+ 119 PDF objects out of 1000 (max. 8388607)
+ 54 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 80621 words of extra memory for PDF output out of 89155 (max. 10000000)
+
