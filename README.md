@@ -37,7 +37,7 @@ Python 3.11+ and `pdflatex` are required. Secrets go in `.env` at the repo root 
 | Name | Used for |
 | --- | --- |
 | `ANTHROPIC_API_KEY` | Newsroom calls |
-| `OPENROUTER_API_KEY` | Meen, the chat assistant (`MEEN_MODEL` overrides `z-ai/glm-5.3-flash`) |
+| `OPENROUTER_API_KEY` | Meen, the chat assistant |
 | `TVLY_API_KEY` | Search and article extract |
 | `TRELLO_API_KEY` / `TRELLO_TOKEN` | The desk (board **Tasks**) |
 | `GOOGLE_ICAL` | Secret calendar URL (today + tomorrow) |
@@ -53,7 +53,7 @@ python -m src.cli preview --sample   # reprint a saved example; no agents, no AP
 python -m src.cli send               # same as preview, then email the PDF
 ```
 
-`preview` does not send mail. `--sample` is the layout check. Meen (below) runs that same code from the chat, and can email a printed edition afterwards.
+`preview` does not send mail. `--sample` is the layout check. The chatbot (below) runs that same code from the chat, and can email a printed edition afterwards.
 
 Output lands in `editions/YYYY-MM-DD/` (JSON, TeX, PDF, images). Logs are in `logs/`.
 
@@ -87,19 +87,18 @@ cp scripts/rameen-taste.service scripts/rameen-reflect.{service,timer} ~/.config
 systemctl --user enable --now rameen-taste.service rameen-reflect.timer
 ```
 
-### Meen
+### Meen - the chatbot
 
-Every page of `serve` has a round avatar button at the bottom right that opens Meen, the newspaper assistant. Each turn she is told what the page is showing — story previews with their themes and your vote on each, or the taste page — and your interests from `config/user.md`. She can:
+Every page of `serve` has a round avatar button at the bottom right that opens chatbot, the newspaper assistant. Each turn it is told what the page is showing — story previews with their themes and your vote on each, or the taste page — and your interests from `config/user.md`. It can:
 
 - **print today's paper** — the same run as `preview`, without opening the PDF viewer. The chat shows a timer and quips for about a minute, then the page reloads on the new edition. One run at a time: a second tab is told to wait.
 - **email an edition** — sends an already-printed PDF to the address in `config/paper.yaml`. It never prints a new one, and never sends to an address given in chat.
 - **read any edition** — today's or an older one, whatever page you are on.
 - **report on your taste** — stories printed, liked and disliked per topic, plus rising and fading themes. Re-read from `data/taste.db` on every call.
 - **edit `config/user.md`** — an exact find-and-replace, refused when the text appears more than once.
+- answer all questions based on your interest and the edition.
 
 Chats are remembered per browser tab until the server restarts. The pencil icon starts a fresh conversation, the arrows expand the panel to full screen, and Escape steps back one level.
-
-To change her face, replace `src/web/meen.jpg`. Any square image works, and `.png`, `.gif` or `.webp` are served just as happily — keep one `meen.*` file in that folder.
 
 The server listens on 127.0.0.1 only and has no login; do not expose the port.
 
