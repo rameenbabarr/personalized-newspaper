@@ -8,18 +8,20 @@ Each agent has one job, one set of instructions, and a fixed answer form. Agents
 
 ![RSS, Tavily, Trello, Calendar, and Weather into Agents, then JSON, PDF, and Email](docs/architecture.png)
 
-A run takes about a minute: **gather → choose → write → print → send**.
+A run takes a minute or so: **gather → choose → write → print → send**.
 
 | Agent | Job |
 | --- | --- |
 | Query writer | 4 search queries per topic from `config/user.md` |
-| Topic gate × 5 | Keep the best 4 headlines on one beat |
+| Discovery | Guess one topic you never asked for, to try today |
+| Topic gate × N | Keep the best 4 headlines on one beat |
 | Front-page editor | Pick the one lead story |
-| Beat ranker × 5 | Order the leftovers |
-| Writer | Rewrite one story; no invented facts |
+| Beat ranker × N | Order the leftovers |
+| Writer × one per story | Rewrite one story; no invented facts |
 | Morning-note writer | Note from weather, meetings, and Trello |
+| Weekly reflect | What is rising and fading; suggests `user.md` edits |
 
-Five standing topics: Palestine, art and crafts, Islamabad culture, space, tech and AI.
+Five standing topics: Palestine, art and crafts, Islamabad culture, space, tech and AI. N is those five plus whatever discovery topics are in play, so a typical morning is about 36 calls.
 
 ## Setup
 
@@ -39,7 +41,7 @@ Python 3.11+ and `pdflatex` are required. Secrets go in `.env` at the repo root 
 | `TVLY_API_KEY` | Search and article extract |
 | `TRELLO_API_KEY` / `TRELLO_TOKEN` | The desk (board **Tasks**) |
 | `GOOGLE_ICAL` | Secret calendar URL (today + tomorrow) |
-| `GMAIL_APP_PASSWORD` | Gmail send only |
+| `GMAIL_APP_PASSWORD` | Gmail send: the 07:00 run, and Meen's email tool |
 
 Paper name, send addresses, and Trello list names are in `config/paper.yaml`. Interests are in `config/user.md`. Do not commit keys.
 
@@ -51,7 +53,7 @@ python -m src.cli preview --sample   # reprint a saved example; no agents, no AP
 python -m src.cli send               # same as preview, then email the PDF
 ```
 
-`preview` does not send mail. `--sample` is the layout check.
+`preview` does not send mail. `--sample` is the layout check. Meen (below) runs that same code from the chat, and can email a printed edition afterwards.
 
 Output lands in `editions/YYYY-MM-DD/` (JSON, TeX, PDF, images). Logs are in `logs/`.
 
@@ -87,12 +89,17 @@ systemctl --user enable --now rameen-taste.service rameen-reflect.timer
 
 ### Meen
 
-Every page of `serve` has an **M** button at the bottom right that opens Meen, the newspaper assistant. Meen sees previews of the stories on the page (or knows the page is empty) and your interests from `config/user.md`. It can:
-- print today's paper (the same run as `preview`, without opening Preview). The chat waits about a minute, then the page reloads.
-- edit `config/user.md` when you ask it to change your interests.
-- read your taste history.
+Every page of `serve` has a round avatar button at the bottom right that opens Meen, the newspaper assistant. Each turn she is told what the page is showing — story previews with their themes and your vote on each, or the taste page — and your interests from `config/user.md`. She can:
 
-Chats are remembered per browser tab until the server restarts.
+- **print today's paper** — the same run as `preview`, without opening the PDF viewer. The chat shows a timer and quips for about a minute, then the page reloads on the new edition. One run at a time: a second tab is told to wait.
+- **email an edition** — sends an already-printed PDF to the address in `config/paper.yaml`. It never prints a new one, and never sends to an address given in chat.
+- **read any edition** — today's or an older one, whatever page you are on.
+- **report on your taste** — stories printed, liked and disliked per topic, plus rising and fading themes. Re-read from `data/taste.db` on every call.
+- **edit `config/user.md`** — an exact find-and-replace, refused when the text appears more than once.
+
+Chats are remembered per browser tab until the server restarts. The pencil icon starts a fresh conversation, the arrows expand the panel to full screen, and Escape steps back one level.
+
+To change her face, replace `src/web/meen.jpg`. Any square image works, and `.png`, `.gif` or `.webp` are served just as happily — keep one `meen.*` file in that folder.
 
 The server listens on 127.0.0.1 only and has no login; do not expose the port.
 
