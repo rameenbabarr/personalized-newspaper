@@ -65,6 +65,44 @@ def test_generate_streams_generating_then_reload(user_md, monkeypatch) -> None:
     assert "Comet" in model.seen[1][-1].content  # tool result went back to the model
 
 
+def test_email_edition_sends_the_printed_pdf(tmp_path, monkeypatch) -> None:
+    from datetime import datetime
+
+    import src.config
+    import src.deliver.smtp
+    from src.config import TZ
+    from src.models import Article, Desk, Edition
+    from src.web import app
+
+    day = "2026-09-20"
+    (tmp_path / "editions" / day).mkdir(parents=True)
+    edition = Edition(
+        paper_name="The Rameen Times",
+        date=day,
+        volume="Vol. I",
+        generated_at=datetime(2026, 9, 20, tzinfo=TZ),
+        timezone="Asia/Karachi",
+        diary=[],
+        desk=Desk(pending=[], in_progress=[]),
+        articles=[
+            Article(id="space-abc", headline="Comet", section="Space", body=["A comet."],
+                    role="lead", source_url="https://e.com/c", source_name="NASA"),
+        ],
+    )
+    (tmp_path / "editions" / day / f"{day}.json").write_text(edition.model_dump_json())
+    (tmp_path / "editions" / day / f"{day}.pdf").write_bytes(b"%PDF-1.4 pretend")
+    monkeypatch.setattr(app, "EDITIONS", tmp_path / "editions")
+    monkeypatch.setattr(src.config, "ROOT", tmp_path)
+    sent: list[tuple[str, str]] = []
+    monkeypatch.setattr(src.deliver.smtp, "send_pdf", lambda e, p: sent.append((e.date, p.name)))
+
+    assert "Emailed" in meen.email_edition.invoke({"date": ""})
+    assert sent == [(day, f"{day}.pdf")]
+    # A day with no edition must not fall through to sending the wrong one.
+    assert "No edition for" in meen.email_edition.invoke({"date": "1999-01-01"})
+    assert len(sent) == 1
+
+
 def test_edit_interests_replaces_once_or_appends(user_md) -> None:
     assert meen.edit_interests.invoke({"find": "Missions", "replace": "Rockets"}) == "Interests updated."
     assert "Rockets and sky events." in user_md.read_text()

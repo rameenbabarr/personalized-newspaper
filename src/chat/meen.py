@@ -52,6 +52,7 @@ What you can do:
 - Talk about the stories on screen, the reader's interests, their taste history and anything else they bring up.
 - {generate}: print a fresh edition for today. It takes about a minute. Call it when the reader asks for a paper or clearly wants one. It needs no arguments, and the page reloads to show the new edition afterwards.
 - edit_interests: change the reader's interests. The newsroom reads them every morning, so a change there changes tomorrow's paper. Before editing, say in one line what you will change, unless the reader has already told you exactly what to do. Keep the existing style: short plain sentences under "## Topic" headings.
+- email_edition: email a printed edition's PDF to the reader. It goes to their own address, the one the paper already sends to, so you never need to ask for an address and must not accept another one. Say the paper is on its way only after the tool says it sent.
 - read_edition: the stories in any printed edition. The section below shows only the page the reader is on, so when they ask what is in the paper and that page is not an edition, call this instead of saying you cannot see it. No date means the most recent edition.
 - taste_report: the per-topic tally of stories printed, liked and disliked, plus themes rising and fading and the trial topics. Use it before you make claims about the reader's taste, and call it again rather than reusing an earlier answer in this conversation: they vote as they read, so the numbers move under you.
 
@@ -107,6 +108,34 @@ def edit_interests(find: str, replace: str) -> str:
 
 
 @tool
+def email_edition(date: str = "") -> str:
+    """Email a printed edition's PDF to the reader's own address, the one the paper is
+    set up to send to. `date` is YYYY-MM-DD; leave it empty for the most recent edition.
+    This sends an existing PDF and never prints a new one."""
+    from src.config import ROOT
+    from src.deliver.smtp import send_pdf
+    from src.web.app import edition_dates, load_edition
+
+    days = edition_dates()
+    if not days:
+        return "No edition has been printed yet, so there is nothing to send."
+    day = date.strip() or days[0]
+    if day not in days:
+        return f"No edition for {day}. Printed so far: {', '.join(days[:10])}."
+    edition = load_edition(day)
+    pdf = ROOT / "editions" / day / f"{day}.pdf"
+    if edition is None or not pdf.is_file():
+        return f"The {day} edition has no PDF on disk any more. Offer to print it again."
+    try:
+        send_pdf(edition, pdf)
+    except Exception as exc:
+        error(f"meen email failed: {exc}")
+        return f"The send failed: {exc}"
+    ok(f"meen: emailed the {day} edition")
+    return f"Emailed the {day} edition to the reader's usual address."
+
+
+@tool
 def read_edition(date: str = "") -> str:
     """The stories in one printed edition, as previews. `date` is YYYY-MM-DD; leave it
     empty for the most recent edition. Use this whenever the reader asks about a paper
@@ -142,7 +171,7 @@ def taste_report() -> str:
     return json.dumps(summary, indent=1, default=str)
 
 
-TOOLS = [generate_newspaper, edit_interests, read_edition, taste_report]
+TOOLS = [generate_newspaper, edit_interests, email_edition, read_edition, taste_report]
 
 
 def _paper_name() -> str:
