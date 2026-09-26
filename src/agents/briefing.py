@@ -20,7 +20,7 @@ OPUS = "claude-opus-5"
 
 HEADLINE_SYSTEM = """You pick the front-page story for The Rameen Times.
 
-You see only titles and snippets. Return one headline_id from the list. That is the story Hash would stop and read this morning. Do not invent an id. Do not write a headline.
+You see only titles and snippets. Return one headline_id from the list. That is the story Rameen would stop and read this morning. Do not invent an id. Do not write a headline.
 """
 
 RANK_SYSTEM = """You rank the leftover stories for one beat of The Rameen Times.

@@ -1,0 +1,428 @@
+{# Meen, the newspaper assistant: a launcher bottom right and a chat panel, on every page. #}
+<style>
+  .meen, .meen * { box-sizing: border-box; }
+  .meen {
+    --m-ink: #17130f; --m-ink-2: #2a211c; --m-cream: #fbf7f0; --m-paper: #fffdfa;
+    --m-line: rgba(23, 19, 15, .09); --m-soft: #6f665c; --m-red: #9e1b26; --m-red-2: #c23a46;
+    --m-gold: #c9a45c; --m-ok: #3fb27f;
+    --m-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --m-serif: "Charter", "Bitstream Charter", Georgia, serif;
+    --m-ease: cubic-bezier(.2, .8, .2, 1);
+    font-family: var(--m-sans);
+  }
+
+  /* Launcher */
+  .meen-launch {
+    position: fixed; right: 24px; bottom: 24px; z-index: 60; width: 60px; height: 60px; border: 0; border-radius: 50%;
+    cursor: pointer; color: var(--m-cream); display: grid; place-items: center; padding: 3px;
+    background: radial-gradient(120% 120% at 30% 20%, #3b2a22 0%, var(--m-ink) 55%, #0c0a08 100%);
+    box-shadow: 0 14px 30px -10px rgba(23, 19, 15, .55), 0 0 0 1px rgba(201, 164, 92, .35) inset;
+    transition: transform .25s var(--m-ease), box-shadow .25s var(--m-ease);
+  }
+  .meen-launch:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 20px 36px -12px rgba(23, 19, 15, .6), 0 0 0 1px rgba(201, 164, 92, .6) inset; }
+  .meen-launch:focus-visible { outline: 3px solid var(--m-gold); outline-offset: 3px; }
+  .meen-launch .glyph { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; transition: transform .3s var(--m-ease), opacity .2s; }
+  .meen-launch .close { position: absolute; opacity: 0; transform: rotate(-90deg); transition: transform .3s var(--m-ease), opacity .2s; }
+  .meen.open .meen-launch .glyph { opacity: 0; transform: rotate(90deg) scale(.6); }
+  .meen.open .meen-launch .close { opacity: 1; transform: none; }
+  .meen-launch .ping { position: absolute; top: 4px; right: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--m-red-2); border: 2px solid var(--m-cream); }
+  .meen.seen .meen-launch .ping { display: none; }
+  .meen-tip {
+    position: fixed; right: 96px; bottom: 38px; z-index: 60; pointer-events: none;
+    background: var(--m-ink); color: var(--m-cream); font: 500 13px var(--m-sans); padding: 7px 12px; border-radius: 999px;
+    opacity: 0; transform: translateX(6px); transition: opacity .2s, transform .2s var(--m-ease); white-space: nowrap;
+  }
+  .meen-launch:hover + .meen-tip { opacity: 1; transform: none; }
+  .meen.open .meen-tip { display: none; }
+
+  /* Panel */
+  .meen-panel {
+    position: fixed; right: 24px; bottom: 100px; z-index: 60; width: 404px; height: min(640px, calc(100vh - 128px));
+    display: flex; flex-direction: column; overflow: hidden; border-radius: 22px; background: var(--m-paper);
+    border: 1px solid var(--m-line);
+    box-shadow: 0 40px 80px -24px rgba(35, 20, 15, .38), 0 12px 24px -12px rgba(35, 20, 15, .18);
+    transform-origin: bottom right; opacity: 0; transform: translateY(12px) scale(.96); pointer-events: none; visibility: hidden;
+    transition: opacity .22s var(--m-ease), transform .28s var(--m-ease), visibility 0s linear .28s;
+  }
+  .meen.open .meen-panel { opacity: 1; transform: none; pointer-events: auto; visibility: visible; transition-delay: 0s; }
+
+  /* Expanded: the panel fills the window. The conversation keeps a column
+     width, or bubbles would stretch to a metre wide on a desktop screen. */
+  .meen.expanded .meen-panel { inset: 16px; width: auto; height: auto; border-radius: 20px; }
+  .meen.expanded .meen-launch, .meen.expanded .meen-tip { display: none; }
+  .meen.expanded .meen-log { padding: 26px 20px 16px; }
+  .meen.expanded .meen-log > *, .meen.expanded .meen-field { width: 100%; max-width: 760px; margin-left: auto; margin-right: auto; }
+  .meen.expanded .m-bubble { max-width: 74%; }
+  #meen-expand .ico-collapse { display: none; }
+  .meen.expanded #meen-expand .ico-expand { display: none; }
+  .meen.expanded #meen-expand .ico-collapse { display: block; }
+
+  .meen-head {
+    position: relative; display: flex; align-items: center; gap: 12px; padding: 16px 14px 16px 18px; color: var(--m-cream);
+    background: radial-gradient(140% 180% at 0% 0%, #3a2a22 0%, var(--m-ink) 55%, #0e0b09 100%);
+  }
+  .meen-head::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--m-gold), transparent); opacity: .7; }
+  .meen-avatar {
+    flex: none; width: 42px; height: 42px; border-radius: 50%; object-fit: cover;
+    box-shadow: 0 0 0 2px rgba(201, 164, 92, .7);
+  }
+  .meen-who { flex: 1; min-width: 0; }
+  .meen-who b { display: block; font: 700 18px/1.1 var(--m-serif); letter-spacing: .01em; }
+  .meen-who span { display: flex; align-items: center; gap: 6px; margin-top: 3px; font: 500 12px var(--m-sans); color: rgba(251, 247, 240, .68); }
+  .meen-who span i { width: 7px; height: 7px; border-radius: 50%; background: var(--m-ok); box-shadow: 0 0 0 3px rgba(63, 178, 127, .22); }
+  .meen-icon {
+    width: 34px; height: 34px; border: 0; border-radius: 10px; background: transparent; color: rgba(251, 247, 240, .75);
+    display: grid; place-items: center; cursor: pointer; transition: background .15s, color .15s;
+  }
+  .meen-icon:hover { background: rgba(251, 247, 240, .1); color: var(--m-cream); }
+  .meen-icon:focus-visible { outline: 2px solid var(--m-gold); }
+
+  .meen-log {
+    flex: 1; overflow-y: auto; padding: 20px 16px 12px; display: flex; flex-direction: column; gap: 14px;
+    background: linear-gradient(180deg, #fbf8f3 0%, var(--m-paper) 100%); scroll-behavior: smooth;
+  }
+  .meen-log::-webkit-scrollbar { width: 8px; }
+  .meen-log::-webkit-scrollbar-thumb { background: rgba(23, 19, 15, .12); border-radius: 8px; }
+
+  .m-row { display: flex; gap: 9px; align-items: flex-end; animation: m-in .28s var(--m-ease) both; }
+  .m-row.user { justify-content: flex-end; }
+  .m-row .m-av { flex: none; width: 28px; height: 28px; border-radius: 50%; object-fit: cover;
+    box-shadow: 0 0 0 1.5px rgba(201, 164, 92, .6); }
+  .m-bubble { max-width: 82%; padding: 10px 14px; font: 14.5px/1.55 var(--m-sans); overflow-wrap: anywhere; }
+  .m-row.meen .m-bubble { background: #fff; color: var(--m-ink); border: 1px solid var(--m-line); border-radius: 18px 18px 18px 6px;
+    box-shadow: 0 1px 2px rgba(23, 19, 15, .04), 0 6px 16px -10px rgba(23, 19, 15, .12); }
+  .m-row.user .m-bubble { background: linear-gradient(160deg, var(--m-ink-2), var(--m-ink)); color: var(--m-cream);
+    border-radius: 18px 18px 6px 18px; white-space: pre-wrap; }
+  .m-row.err .m-bubble { border-color: rgba(158, 27, 38, .3); background: #fff6f6; }
+  .m-bubble p { margin: 0 0 .6em; } .m-bubble p:last-child { margin-bottom: 0; }
+  .m-bubble ul, .m-bubble ol { margin: .2em 0 .6em; padding-left: 1.2em; } .m-bubble li { margin: .2em 0; }
+  .m-bubble li::marker { color: var(--m-red); }
+  .m-bubble strong { font-weight: 650; }
+  .m-bubble a { color: var(--m-red); text-underline-offset: 2px; }
+  .m-bubble code { font: 12.5px ui-monospace, Menlo, monospace; background: #f4efe7; padding: 1px 5px; border-radius: 5px; }
+
+  .m-dots { display: inline-flex; gap: 4px; padding: 4px 2px; }
+  .m-dots i { width: 7px; height: 7px; border-radius: 50%; background: #b9ada0; animation: m-bounce 1.2s infinite ease-in-out; }
+  .m-dots i:nth-child(2) { animation-delay: .15s; } .m-dots i:nth-child(3) { animation-delay: .3s; }
+
+  /* The print-run card, shown while a paper is being made */
+  .m-press { align-self: stretch; border-radius: 18px; padding: 16px 16px 14px; color: var(--m-cream); animation: m-in .3s var(--m-ease) both;
+    background: radial-gradient(140% 160% at 100% 0%, #3a2a22 0%, var(--m-ink) 60%); box-shadow: 0 14px 30px -16px rgba(23, 19, 15, .6); }
+  .m-press .top { display: flex; justify-content: space-between; align-items: center; font: 700 11px var(--m-sans);
+    letter-spacing: .12em; text-transform: uppercase; color: var(--m-gold); }
+  .m-press .top time { font-variant-numeric: tabular-nums; color: rgba(251, 247, 240, .6); letter-spacing: .04em; }
+  .m-press .bar { position: relative; height: 3px; margin: 12px 0 14px; border-radius: 3px; background: rgba(251, 247, 240, .12); overflow: hidden; }
+  .m-press .bar::after { content: ""; position: absolute; inset: 0; width: 40%; border-radius: 3px;
+    background: linear-gradient(90deg, transparent, var(--m-gold), transparent); animation: m-slide 1.6s infinite var(--m-ease); }
+  .m-press q { display: block; min-height: 3em; font: italic 16px/1.5 var(--m-serif); quotes: "\201C" "\201D"; transition: opacity .3s; }
+  .m-press q.fade { opacity: 0; }
+
+  /* Welcome */
+  .m-hello { margin: auto 0; text-align: center; padding: 8px 6px 4px; animation: m-in .35s var(--m-ease) both; }
+  .m-hello .m-avatar-lg { display: block; width: 76px; height: 76px; margin: 0 auto 14px; border-radius: 50%; object-fit: cover;
+    box-shadow: 0 0 0 4px #fff, 0 0 0 5px rgba(201, 164, 92, .6), 0 16px 30px -14px rgba(23, 19, 15, .6); }
+  .m-hello h3 { margin: 0 0 6px; font: 700 22px/1.2 var(--m-serif); color: var(--m-ink); }
+  .m-hello p { margin: 0 auto 18px; max-width: 280px; font: 14px/1.5 var(--m-sans); color: var(--m-soft); }
+  .m-chips { display: flex; flex-direction: column; gap: 8px; }
+  .m-chip { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; cursor: pointer; padding: 11px 14px;
+    background: #fff; border: 1px solid var(--m-line); border-radius: 14px; font: 500 14px var(--m-sans); color: var(--m-ink);
+    transition: border-color .15s, transform .15s var(--m-ease), box-shadow .15s; }
+  .m-chip span { font-size: 16px; }
+  .m-chip:hover { border-color: rgba(158, 27, 38, .35); transform: translateY(-1px); box-shadow: 0 8px 18px -12px rgba(23, 19, 15, .35); }
+
+  /* Composer */
+  .meen-form { padding: 12px 14px 10px; background: var(--m-paper); border-top: 1px solid var(--m-line); }
+  .meen-field { display: flex; align-items: flex-end; gap: 8px; padding: 6px 6px 6px 14px; background: #fff; border: 1px solid rgba(23, 19, 15, .14);
+    border-radius: 16px; transition: border-color .15s, box-shadow .15s; }
+  .meen-field:focus-within { border-color: rgba(158, 27, 38, .5); box-shadow: 0 0 0 4px rgba(158, 27, 38, .08); }
+  .meen-field textarea { flex: 1; border: 0; outline: 0; resize: none; background: transparent; padding: 8px 0; max-height: 128px;
+    font: 14.5px/1.45 var(--m-sans); color: var(--m-ink); }
+  .meen-field textarea::placeholder { color: #a39a90; }
+  .meen-send { flex: none; width: 38px; height: 38px; border: 0; border-radius: 12px; cursor: pointer; display: grid; place-items: center;
+    color: #fff; background: linear-gradient(150deg, var(--m-red-2), var(--m-red)); transition: transform .15s var(--m-ease), opacity .15s; }
+  .meen-send:hover:not(:disabled) { transform: translateY(-1px); }
+  .meen-send:disabled { opacity: .35; cursor: default; }
+  .meen-hint { margin: 7px 2px 0; text-align: center; font: 11px var(--m-sans); color: #a39a90; }
+
+  @keyframes m-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @keyframes m-bounce { 0%, 80%, 100% { transform: translateY(0); opacity: .5; } 40% { transform: translateY(-4px); opacity: 1; } }
+  @keyframes m-slide { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
+
+  @media (max-width: 520px) {
+    .meen-panel { inset: 0; width: auto; height: auto; border-radius: 0; border: 0; }
+    .meen.open .meen-launch { display: none; }
+    .meen-launch { right: 16px; bottom: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .meen *, .meen *::after { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="meen" id="meen">
+  <button class="meen-launch" id="meen-launch" type="button" aria-label="Chat with Meen" aria-expanded="false" aria-controls="meen-panel">
+    <img class="glyph" src="/meen.jpg" alt="">
+    <svg class="close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    <span class="ping"></span>
+  </button>
+  <span class="meen-tip">Ask Meen</span>
+
+  <section class="meen-panel" id="meen-panel" role="dialog" aria-label="Meen, your newspaper assistant">
+    <header class="meen-head">
+      <img class="meen-avatar" src="/meen.jpg" alt="Meen">
+      <div class="meen-who"><b>Meen</b><span><i></i>Your newsroom assistant</span></div>
+      <button class="meen-icon" id="meen-new" type="button" title="New conversation" aria-label="New conversation">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+      </button>
+      <button class="meen-icon" id="meen-expand" type="button" title="Expand" aria-label="Expand chat" aria-pressed="false">
+        <svg class="ico-expand" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-8 8M3 21l8-8"/></svg>
+        <svg class="ico-collapse" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7"/></svg>
+      </button>
+      <button class="meen-icon" id="meen-min" type="button" title="Minimise" aria-label="Minimise">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+      </button>
+    </header>
+    <div class="meen-log" id="meen-log" aria-live="polite"></div>
+    <form class="meen-form" id="meen-form">
+      <div class="meen-field">
+        <textarea id="meen-in" rows="1" placeholder="Ask about today's paper…" aria-label="Message Meen"
+          data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false"></textarea>
+        <button class="meen-send" id="meen-send" type="submit" aria-label="Send" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        </button>
+      </div>
+      <p class="meen-hint">Enter to send · Shift + Enter for a new line</p>
+    </form>
+  </section>
+</div>
+
+<script>
+(() => {
+  const QUIPS = [
+    "A newspaper company takes a day to get you a generic newspaper. I take a minute and you think it's too much.",
+    "Rolling the presses. Metaphorically. I don't have hands.",
+    "Reading the entire internet so you don't have to. You're welcome.",
+    "Somewhere a paperboy is losing his job to me. Worth it.",
+    "Fact-checking. Unlike your uncle's WhatsApp forwards.",
+    "Picking the lead story. It's like choosing a favourite child, except I actually have opinions.",
+    "Hand-crafting headlines. Artisanal, small batch, no preservatives.",
+    "Your paper is in the oven. Do not open the oven.",
+    "Asking NASA nicely for space news. They said 'who are you'. Rude.",
+    "Skipping every celebrity story. You're welcome, again.",
+    "Typesetting in LaTeX, because I'm fancy like that.",
+    "Tip: staring at this does not make it faster. I checked.",
+    "Ink is drying. It's digital ink. It dries faster than your patience.",
+    "Negotiating with the Trello board. It has a lot of feelings about your tasks.",
+    "Checking your calendar. Brave of you to have that many meetings.",
+    "The New York Times has 1,700 journalists. You have me. Fair fight.",
+    "Choosing fonts. This is the most important part. Don't argue.",
+    "Filtering out the hype cycle, one breathless press release at a time.",
+    "Almost there. I say that every time, but this time I mean it. Probably.",
+    "Brewing chai for the newsroom agents. They unionised.",
+    "Sorting stories by how much you'll actually read them. Be honest.",
+    "Hunting down the perfect photo. Blurry ones need not apply.",
+    "Writing a morning note that's nicer than your alarm clock.",
+    "Somewhere in this minute, a comet did something cool. I'm on it.",
+    "Good journalism takes time. Great journalism takes about sixty seconds.",
+  ];
+  const CHIPS = [
+    ["🗞️", "What's in today's paper?"],
+    ["✨", "Print me a fresh paper"],
+    ["💛", "What have I been liking lately?"],
+  ];
+  const $ = (id) => document.getElementById(id);
+  const root = $("meen"), log = $("meen-log"), form = $("meen-form"), input = $("meen-in"), sendBtn = $("meen-send");
+  const store = {
+    get(k) { try { return sessionStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { sessionStorage.setItem(k, v); } catch {} },
+  };
+  const newId = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2));
+  let thread = store.get("meen-thread") || newId();
+  store.set("meen-thread", thread);
+
+  // Small, safe Markdown: escape everything first, then allow bold, italics,
+  // inline code, http(s) links, bullet and numbered lists, and paragraphs.
+  const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+  const inline = (s) => esc(s)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, "$1<em>$2</em>")
+    .replace(/(^|[^\w])_([^_\n]+)_(?!\w)/g, "$1<em>$2</em>");
+  function markdown(text) {
+    const out = [];
+    let list = null, para = [];
+    const flushPara = () => { if (para.length) { out.push("<p>" + para.map(inline).join("<br>") + "</p>"); para = []; } };
+    const flushList = () => { if (list) { out.push(`<${list.tag}>` + list.items.map((i) => "<li>" + inline(i) + "</li>").join("") + `</${list.tag}>`); list = null; } };
+    for (const raw of text.replace(/\r/g, "").split("\n")) {
+      const line = raw.trim();
+      const bullet = line.match(/^[-*•]\s+(.*)$/), num = line.match(/^\d+[.)]\s+(.*)$/);
+      if (bullet || num) {
+        flushPara();
+        const tag = bullet ? "ul" : "ol";
+        if (!list || list.tag !== tag) { flushList(); list = { tag, items: [] }; }
+        list.items.push((bullet || num)[1]);
+      } else if (!line) { flushPara(); flushList(); }
+      else { flushList(); para.push(line.replace(/^#{1,6}\s+(.*)$/, "**$1**")); }
+    }
+    flushPara(); flushList();
+    return out.join("");
+  }
+
+  const scroll = () => { log.scrollTop = log.scrollHeight; };
+  function add(role, text) {
+    log.querySelector(".m-hello")?.remove();
+    const row = document.createElement("div");
+    row.className = "m-row " + role;
+    const bubble = document.createElement("div");
+    bubble.className = "m-bubble";
+    if (role === "user") bubble.textContent = text;
+    else { bubble.innerHTML = markdown(text); row.innerHTML = '<img class="m-av" src="/meen.jpg" alt="">'; }
+    row.appendChild(bubble);
+    log.appendChild(row);
+    scroll();
+    return row;
+  }
+  function typing() {
+    const row = add("meen", "");
+    row.querySelector(".m-bubble").innerHTML = '<span class="m-dots"><i></i><i></i><i></i></span>';
+    return row;
+  }
+  function hello() {
+    log.innerHTML = "";
+    const box = document.createElement("div");
+    box.className = "m-hello";
+    box.innerHTML = '<img class="m-avatar-lg" src="/meen.jpg" alt=""><h3>Hi, I\'m Meen.</h3>' +
+      "<p>I read the paper so you don't have to. Ask about today's stories, your taste, or have me print a fresh edition.</p>" +
+      '<div class="m-chips"></div>';
+    for (const [icon, text] of CHIPS) {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "m-chip";
+      chip.innerHTML = `<span>${icon}</span>`;
+      chip.append(text);
+      chip.onclick = () => send(text);
+      box.querySelector(".m-chips").appendChild(chip);
+    }
+    log.appendChild(box);
+  }
+  function pressCard() {
+    const card = document.createElement("div");
+    card.className = "m-press";
+    card.innerHTML = '<div class="top"><span>Printing your paper</span><time>0:00</time></div><div class="bar"></div><q></q>';
+    const q = card.querySelector("q"), clock = card.querySelector("time"), started = Date.now();
+    let last = -1;
+    const next = () => {
+      let i; do { i = Math.floor(Math.random() * QUIPS.length); } while (i === last && QUIPS.length > 1);
+      last = i;
+      q.classList.add("fade");
+      setTimeout(() => { q.textContent = QUIPS[i]; q.classList.remove("fade"); }, q.textContent ? 300 : 0);
+    };
+    next();
+    const quipTimer = setInterval(next, 5000);
+    const clockTimer = setInterval(() => {
+      const s = Math.floor((Date.now() - started) / 1000);
+      clock.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+    }, 1000);
+    card.stop = () => { clearInterval(quipTimer); clearInterval(clockTimer); card.remove(); };
+    return card;
+  }
+
+  function setOpen(open) {
+    root.classList.toggle("open", open);
+    root.classList.add("seen");
+    store.set("meen-seen", "1");
+    $("meen-launch").setAttribute("aria-expanded", String(open));
+    store.set("meen-open", open ? "1" : "0");
+    if (open) { loadHistory(); setTimeout(() => input.focus(), 150); scroll(); }
+  }
+  function setExpanded(on) {
+    root.classList.toggle("expanded", on);
+    const btn = $("meen-expand");
+    btn.setAttribute("aria-pressed", String(on));
+    btn.setAttribute("aria-label", on ? "Restore chat size" : "Expand chat");
+    btn.title = on ? "Restore size" : "Expand";
+    store.set("meen-expanded", on ? "1" : "0");
+    scroll();
+  }
+  $("meen-launch").onclick = () => setOpen(!root.classList.contains("open"));
+  $("meen-min").onclick = () => setOpen(false);
+  $("meen-expand").onclick = () => setExpanded(!root.classList.contains("expanded"));
+  $("meen-new").onclick = () => { if (busy) return; thread = newId(); store.set("meen-thread", thread); hello(); input.focus(); };
+  // Escape steps back one level: full screen first, then closed.
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape" || !root.classList.contains("open")) return;
+    if (root.classList.contains("expanded")) setExpanded(false);
+    else setOpen(false);
+  });
+
+  let loaded = false;
+  async function loadHistory() {
+    if (loaded) return;
+    loaded = true;
+    try {
+      const rows = await (await fetch("/api/chat/history?thread=" + encodeURIComponent(thread))).json();
+      rows.forEach((r) => add(r.role, r.text));
+    } catch {}
+    if (!log.children.length) hello();
+  }
+
+  let busy = false;
+  const sync = () => { sendBtn.disabled = busy || !input.value.trim(); };
+  const grow = () => { input.style.height = "auto"; input.style.height = Math.min(input.scrollHeight, 128) + "px"; };
+  input.addEventListener("input", () => { grow(); sync(); });
+
+  async function send(text) {
+    if (busy) return;
+    busy = true; sync();
+    add("user", text);
+    let wait = typing(), press = null, reload = false;
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ thread, message: text, page: location.pathname }),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const reader = res.body.getReader(), dec = new TextDecoder();
+      let buf = "";
+      for (;;) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buf += dec.decode(value, { stream: true });
+        let nl;
+        while ((nl = buf.indexOf("\n")) >= 0) {
+          const line = buf.slice(0, nl).trim();
+          buf = buf.slice(nl + 1);
+          if (!line) continue;
+          const ev = JSON.parse(line);
+          if (ev.type === "generating" && !press) { wait.remove(); press = pressCard(); log.appendChild(press); scroll(); }
+          else if (ev.type === "reply") { add("meen", ev.text); reload = ev.reload; }
+          else if (ev.type === "error") { add("meen", ev.text).classList.add("err"); }
+        }
+      }
+    } catch (err) {
+      add("meen", "I couldn't reach the newsroom: " + err.message).classList.add("err");
+    } finally {
+      wait.remove();
+      press?.stop();
+      busy = false; sync();
+      input.focus();
+    }
+    // A new edition is today's latest; show it (the chat survives the reload).
+    if (reload) setTimeout(() => { location.href = "/"; }, 1400);
+  }
+
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text || busy) return;
+    input.value = ""; grow(); sync();
+    send(text);
+  };
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); }
+  });
+  if (store.get("meen-seen")) root.classList.add("seen");
+  if (store.get("meen-expanded") === "1") setExpanded(true);
+  if (store.get("meen-open") === "1") setOpen(true);
+})();
+</script>

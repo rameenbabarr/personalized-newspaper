@@ -97,3 +97,38 @@ def test_topic_actions_redirect_and_change_status(server) -> None:
 def test_topic_action_on_bad_slug_is_404(server) -> None:
     assert httpx.get(f"{server}/topic/Bad_Slug/drop").status_code == 404
     assert httpx.get(f"{server}/topic/unknown/drop").status_code == 404
+
+
+def test_page_snapshot_previews_articles_or_says_nothing(server) -> None:
+    text = app.page_snapshot("/")
+    assert "Comet <b>bright</b>" in text and "A comet." in text and "comets" in text
+    assert app.page_snapshot(f"/day/{DAY}") == text
+    assert app.page_snapshot("/day/1999-01-01").startswith("Nothing is being shown")
+    assert "taste" in app.page_snapshot("/trends")
+
+
+def test_chat_endpoint_streams_meen_events(server, monkeypatch) -> None:
+    from src.chat import meen
+
+    seen = {}
+
+    def fake_chat(thread, message, page):
+        seen.update(thread=thread, message=message, page=page)
+        yield {"type": "reply", "text": "hi", "reload": False}
+
+    monkeypatch.setattr(meen, "chat", fake_chat)
+    res = httpx.post(f"{server}/api/chat", json={"thread": "abcd1234", "message": "hey", "page": "/trends"})
+    assert res.status_code == 200
+    assert res.text.strip() == '{"type": "reply", "text": "hi", "reload": false}'
+    assert seen["message"] == "hey" and "taste" in seen["page"]
+    assert httpx.post(f"{server}/api/chat", json={"thread": "x", "message": "hey"}).status_code == 400
+
+
+def test_every_page_has_the_meen_button(server) -> None:
+    assert 'id="meen-launch"' in httpx.get(f"{server}/").text
+    assert 'id="meen-launch"' in httpx.get(f"{server}/day/1999-01-01").text
+
+
+def test_meen_avatar_is_served(server) -> None:
+    res = httpx.get(f"{server}/meen.jpg")
+    assert res.status_code == 200 and res.headers["content-type"] == "image/jpeg"

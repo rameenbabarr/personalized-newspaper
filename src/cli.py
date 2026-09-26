@@ -77,6 +77,23 @@ def _send(edition: Edition, pdf_path: Path) -> None:
     ok("sent")
 
 
+def generate_edition(*, send: bool = False, open_pdf: bool = True) -> Edition:
+    """The live run behind `preview` and `send`: gather, write, print, log
+    taste, and optionally mail. Meen's generate_newspaper tool calls this too."""
+    stories = asyncio.run(build_edition_live())
+    json_path = write_stories(stories)
+    ok(f"json {json_path}")
+    headline = stories.headline.title if stories.headline else "(none)"
+    ok(f"headline: {headline}")
+    info(f"topics: {len(stories.topics)}  meetings: {len(stories.meetings)}  tasks: {len(stories.tasks)}")
+    edition = stories_to_edition(stories)
+    pdf_path = write_edition(edition, preview=open_pdf)
+    record_taste(edition)
+    if send:
+        _send(edition, pdf_path)
+    return edition
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(prog="rameen-times")
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -112,18 +129,7 @@ def main() -> None:
         elif args.cmd == "taste":
             asyncio.run(_reflect())
         else:
-            stories = asyncio.run(build_edition_live())
-            json_path = write_stories(stories)
-            ok(f"json {json_path}")
-            headline = stories.headline.title if stories.headline else "(none)"
-            ok(f"headline: {headline}")
-            info(f"topics: {len(stories.topics)}  meetings: {len(stories.meetings)}  tasks: {len(stories.tasks)}")
-            edition = stories_to_edition(stories)
-            preview_flag = args.cmd == "preview"
-            pdf_path = write_edition(edition, preview=preview_flag)
-            record_taste(edition)
-            if args.cmd == "send":
-                _send(edition, pdf_path)
+            generate_edition(send=args.cmd == "send", open_pdf=args.cmd == "preview")
         saved = log_path() or run_log
         ok(f"log file: {saved}")
     except Exception as exc:

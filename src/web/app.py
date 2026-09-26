@@ -12,6 +12,7 @@ import re
 from datetime import date
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -111,6 +112,40 @@ def page_trends() -> tuple[int, str]:
     )
 
 
+def _preview(article, votes: dict[str, int], topic: str) -> str:
+    vote = {1: " (voted more)", -1: " (voted less)"}.get(votes.get(article.id, 0), "")
+    first = (article.body[0] if article.body else "")[:280]
+    themes = f" Themes: {', '.join(article.themes)}." if article.themes else ""
+    source = f" Source: {article.source_name}." if article.source_name else ""
+    return f"- [{article.role}, {topic_labels().get(topic, topic)}] {article.headline}{vote}\n  {first}{source}{themes}"
+
+
+def page_snapshot(path: str) -> str:
+    """What a page shows, in words, for Meen. Mirrors the GET routes."""
+    parts = [p for p in urlparse(path or "/").path.split("/") if p]
+    if parts == ["trends"]:
+        return ("The 'Your taste' page: charts of how each topic's stories were voted on, rising and "
+                "fading themes, and the discovery topics list. Call taste_report for the numbers.")
+    if parts and not (parts[0] == "day" and len(parts) == 2):
+        return "Nothing is being shown."
+    dates = edition_dates()
+    day = parts[1] if parts else (dates[0] if dates else None)
+    edition = load_edition(day) if day else None
+    if edition is None:
+        return "Nothing is being shown: there is no edition on this page yet."
+    votes = {s["id"]: s["vote"] for s in db.stories_with_votes()}
+    lines = [
+        _preview(a, votes, a.topic or db.topic_of(a.id)) for a in edition.articles
+    ]
+    note = f"\nTrial topic note: {edition.trial_note}" if edition.trial_note else ""
+    return f"The {edition.date} edition ({len(lines)} stories), as article previews:\n" + "\n".join(lines) + note
+
+
+def _thread(value: object) -> str | None:
+    text = str(value or "")
+    return text if re.fullmatch(r"[\w-]{8,64}", text) else None
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = "RameenTaste/1.0"
 
@@ -150,10 +185,51 @@ class Handler(BaseHTTPRequestHandler):
                 self._topic(parts[1], parts[2])
             elif parts[0] == "images" and len(parts) == 3:
                 self._image(parts[1], parts[2])
+            elif parts == ["meen.jpg"]:
+                self._avatar()
+            elif parts == ["api", "chat", "history"]:
+                thread = _thread((query.get("thread") or [""])[0])
+                from src.chat import meen
+
+                rows = meen.history(thread) if thread else []
+                self._send(200, json.dumps(rows), "application/json")
             else:
                 self._send(404, "not found", "text/plain")
         except Exception as exc:  # a bad request must not kill the server
             self._send(500, f"error: {exc}", "text/plain")
+
+    def do_POST(self) -> None:  # noqa: N802
+        if urlparse(self.path).path != "/api/chat":
+            self._send(404, "not found", "text/plain")
+            return
+        try:
+            length = int(self.headers.get("Content-Length") or 0)
+            body = json.loads(self.rfile.read(min(length, 64_000)) or b"{}")
+            thread = _thread(body.get("thread"))
+            message = str(body.get("message") or "").strip()[:4000]
+        except (ValueError, TypeError):
+            thread, message = None, ""
+        if not thread or not message:
+            self._send(400, "need thread and message", "text/plain")
+            return
+        self._chat(thread, message, page_snapshot(str(body.get("page") or "/")))
+
+    def _chat(self, thread: str, message: str, page: str) -> None:
+        """Stream Meen's events as JSON lines, so the page can start its
+        waiting quips the moment a print run begins."""
+        from src.chat import meen
+
+        self.send_response(200)
+        self.send_header("Content-Type", "application/x-ndjson")
+        self.send_header("Cache-Control", "no-cache")
+        self.end_headers()
+        try:
+            for event in meen.chat(thread, message, page):
+                self.wfile.write((json.dumps(event) + "\n").encode())
+                self.wfile.flush()
+        except Exception as exc:
+            event = {"type": "error", "text": f"Meen tripped over something: {exc}"}
+            self.wfile.write((json.dumps(event) + "\n").encode())
 
     def _vote(self, story_id: str, value: int, query: dict) -> None:
         recorded = db.vote(story_id, value)
@@ -173,6 +249,17 @@ class Handler(BaseHTTPRequestHandler):
             return
         db.set_topic(slug, action)
         self._redirect("/trends#topics")
+
+    def _avatar(self) -> None:
+        """Meen's face: whatever image sits at src/web/meen.* (jpg, png, gif...).
+        The route keeps its .jpg name because the browser reads the type from
+        the header, so swapping the file is the whole job."""
+        for path in sorted(Path(__file__).parent.glob("meen.*")):
+            ctype = mimetypes.guess_type(path.name)[0] or ""
+            if ctype.startswith("image/"):
+                self._send(200, path.read_bytes(), ctype)
+                return
+        self._send(404, "not found", "text/plain")
 
     def _image(self, day: str, name: str) -> None:
         if not _DATE.match(day) or not _FILE.match(name):

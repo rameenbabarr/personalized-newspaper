@@ -3,6 +3,8 @@ feedparser
 httpx
 icalendar
 jinja2
+langchain-openai
+langgraph
 pillow
 pydantic>=2
 pyyaml

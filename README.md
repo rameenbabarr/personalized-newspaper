@@ -35,6 +35,7 @@ Python 3.11+ and `pdflatex` are required. Secrets go in `.env` at the repo root 
 | Name | Used for |
 | --- | --- |
 | `ANTHROPIC_API_KEY` | Newsroom calls |
+| `OPENROUTER_API_KEY` | Meen, the chat assistant (`MEEN_MODEL` overrides `z-ai/glm-5.3-flash`) |
 | `TVLY_API_KEY` | Search and article extract |
 | `TRELLO_API_KEY` / `TRELLO_TOKEN` | The desk (board **Tasks**) |
 | `GOOGLE_ICAL` | Secret calendar URL (today + tomorrow) |
@@ -83,6 +84,15 @@ Keep the page server running and the report weekly:
 cp scripts/rameen-taste.service scripts/rameen-reflect.{service,timer} ~/.config/systemd/user/
 systemctl --user enable --now rameen-taste.service rameen-reflect.timer
 ```
+
+### Meen
+
+Every page of `serve` has an **M** button at the bottom right that opens Meen, the newspaper assistant. Meen sees previews of the stories on the page (or knows the page is empty) and your interests from `config/user.md`. It can:
+- print today's paper (the same run as `preview`, without opening Preview). The chat waits about a minute, then the page reloads.
+- edit `config/user.md` when you ask it to change your interests.
+- read your taste history.
+
+Chats are remembered per browser tab until the server restarts.
 
 The server listens on 127.0.0.1 only and has no login; do not expose the port.
 

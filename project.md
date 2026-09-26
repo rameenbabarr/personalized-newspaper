@@ -1,6 +1,6 @@
 # The Rameen Times
 
-Private morning paper for Hash. One Python pipeline on this Linux box gathers news, Trello, and today's calendar. Tavily searches and extracts the stories. A newsroom of Claude Sonnet 5 sub-agents writes the edition. Jinja fills a LaTeX template. pdfLaTeX prints an A4 PDF. SMTP sends a short note with that PDF attached. Not a product.
+Private morning paper for Rameen. One Python pipeline on this Linux box gathers news, Trello, and today's calendar. Tavily searches and extracts the stories. A newsroom of Claude Sonnet 5 sub-agents writes the edition. Jinja fills a LaTeX template. pdfLaTeX prints an A4 PDF. SMTP sends a short note with that PDF attached. Not a product.
 
 The previous TypeScript pipeline is gone. Do not revive it. Write new code in Python 3.
 
@@ -130,7 +130,7 @@ Applies the set policy below, then emits a slate. Code clamps the slate after th
 
 These rules are the Chief. The model may not invent a sixth rule to "make the page look full." `balanced_assignments` / `clamp_slate` enforce the cap and the photos even if the model ignores them.
 
-1. **Lead test (section does not matter).** The lead is the story Hash would actually stop and read this morning, **and** it has a real photograph (`image_url` on the candidate). If several pass the "I would stop" test, pick the one with the better photo. If the chosen lead has no photo and another candidate does, swap. `use_image=false` on the lead is only legal if no candidate has a photo. Do not reserve the front page for Palestine or rotate by weekday.
+1. **Lead test (section does not matter).** The lead is the story Rameen would actually stop and read this morning, **and** it has a real photograph (`image_url` on the candidate). If several pass the "I would stop" test, pick the one with the better photo. If the chosen lead has no photo and another candidate does, swap. `use_image=false` on the lead is only legal if no candidate has a photo. Do not reserve the front page for Palestine or rotate by weekday.
 
 2. **Fresh only.** Candidates are already filtered against `seen.json`. Do not bring a story back because the page looks thin. Same-day duplicates (same URL, or near-identical titles) stay omitted.
 

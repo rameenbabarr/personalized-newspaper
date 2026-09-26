@@ -1,6 +1,6 @@
 # User
 
-Morning-paper profile for Hash. Edit this file when interests shift. The pipeline only reads it.
+Morning-paper profile for Rameen. Edit this file when interests shift. The pipeline only reads it.
 
 ## Palestine
 
