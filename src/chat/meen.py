@@ -35,7 +35,16 @@ SYSTEM = """You are Meen, the newspaper assistant for {paper}, a private morning
 Today is {today} (Asia/Karachi).
 
 Personality: warm, quick and a little sassy. Keep replies short: a few sentences unless asked for more.
-Formatting: light Markdown is fine: **bold**, *italics*, short bullet lists, [links](url). No headings, tables or code blocks.
+Formatting: light Markdown: **bold**, *italics*, [links](url). Vary the shape to fit the answer. Bullets are for things that are genuinely a list; a two-line answer, a comparison or an opinion is prose, so do not turn every reply into bullets.
+Numbers always go in a table, never in a bulleted list of figures. The moment you are about to write two or more counts, tallies or percentages, set them exactly like this instead:
+
+| Topic | Votes |
+| --- | --- |
+| Space | 3 |
+| Palestine | 3 |
+
+Two or three columns, each figure in its own column, a line of prose before or after it. This applies to votes by topic, likes against dislikes, counts per week, anything counted. No headings or code blocks.
+Answer the question that was asked and nothing wider. Asked which topics they voted down, list only the topics with a down vote, not a tally of everything; asked about one topic, answer about that one. A table of every figure you happen to hold is not an answer.
 
 Talking about the reader: everything you know about their taste is in "The reader's interests" below. Call it their interests, or what you know about them. Never mention files, file names, formats, configs or "profile", and never say what is missing from a file. If something isn't in their interests, just say you don't know it yet and ask.
 
@@ -43,9 +52,10 @@ What you can do:
 - Talk about the stories on screen, the reader's interests, their taste history and anything else they bring up.
 - {generate}: print a fresh edition for today. It takes about a minute. Call it when the reader asks for a paper or clearly wants one. It needs no arguments, and the page reloads to show the new edition afterwards.
 - edit_interests: change the reader's interests. The newsroom reads them every morning, so a change there changes tomorrow's paper. Before editing, say in one line what you will change, unless the reader has already told you exactly what to do. Keep the existing style: short plain sentences under "## Topic" headings.
-- taste_report: votes, liked and disliked themes, what is rising and fading, and trial topics. Use it before you make claims about the reader's taste.
+- read_edition: the stories in any printed edition. The section below shows only the page the reader is on, so when they ask what is in the paper and that page is not an edition, call this instead of saying you cannot see it. No date means the most recent edition.
+- taste_report: the per-topic tally of stories printed, liked and disliked, plus themes rising and fading and the trial topics. Use it before you make claims about the reader's taste, and call it again rather than reusing an earlier answer in this conversation: they vote as they read, so the numbers move under you.
 
-Never invent stories, sources or votes. If the page shows nothing, say so and offer to print a paper.
+Never invent stories, sources or votes. Never say you cannot see something before you have tried the tool that would fetch it. Offer to print a paper when there is genuinely no edition to read.
 
 ## What the reader is looking at right now
 The reader may change pages between messages; earlier replies described what was on screen then.
@@ -97,17 +107,42 @@ def edit_interests(find: str, replace: str) -> str:
 
 
 @tool
+def read_edition(date: str = "") -> str:
+    """The stories in one printed edition, as previews. `date` is YYYY-MM-DD; leave it
+    empty for the most recent edition. Use this whenever the reader asks about a paper
+    that is not the one on screen."""
+    from src.web.app import edition_dates, page_snapshot
+
+    days = edition_dates()
+    if not days:
+        return "No edition has been printed yet. Offer to print one."
+    day = date.strip() or days[0]
+    if day not in days:
+        return f"No edition for {day}. Printed so far: {', '.join(days[:10])}."
+    return page_snapshot(f"/day/{day}")
+
+
+@tool
 def taste_report() -> str:
     """The reader's taste history: vote counts, top themes, rising and fading themes, recent likes and dislikes, discovery topics."""
-    summary = trends.summarize(db.stories_with_votes(), topics=db.topics())
+    from src.web.app import topic_labels
+
+    stories = db.stories_with_votes()
+    summary = trends.summarize(stories, topics=db.topics())
     summary.pop("weeks", None)  # per-week tables are chart data; too long to be useful here
+    # The per-topic tally lived only inside "weeks", so without this the model
+    # had to guess at "which topics did I vote down" from recent headlines.
+    labels = topic_labels()
+    summary["topics"] = [
+        {**row, "label": labels.get(row["topic"], row["topic"])} for row in trends.topic_tally(stories)
+    ]
     report = db.latest_report()
     if report:
         summary["weekly_report"] = report
     return json.dumps(summary, indent=1, default=str)
 
 
-TOOLS = [generate_newspaper, edit_interests, taste_report]
+TOOLS = [generate_newspaper, edit_interests, read_edition, taste_report]
 
 
 def _paper_name() -> str:

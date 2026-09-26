@@ -9,7 +9,7 @@ from src.config import TZ
 from src.models import Article, Desk, Edition, LongDraft, TasteReport
 from src.render.tex import vote_links
 from src.taste import db
-from src.taste.trends import like_rate, summarize, theme_shift, week_of, weekly_topics
+from src.taste.trends import like_rate, summarize, theme_shift, topic_tally, week_of, weekly_topics
 
 
 def _article(story_id: str, themes: list[str], role: str = "secondary") -> Article:
@@ -130,6 +130,23 @@ def test_weekly_topics_counts_votes() -> None:
     assert week["week"] == week_of("2026-09-14")
     assert week["topics"]["space"] == {"shown": 3, "up": 1, "down": 1, "rate": 0.4}
     assert week["topics"]["palestine"]["shown"] == 0
+
+
+def test_topic_tally_counts_each_topic_and_ranks_by_likes() -> None:
+    stories = [
+        _story("2026-09-14", "space", 1, []),
+        _story("2026-09-15", "space", 1, []),
+        _story("2026-09-15", "space", 0, []),
+        _story("2026-09-15", "art-crafts", -1, []),
+        _story("2026-09-16", "", 0, []),
+    ]
+    rows = {row["topic"]: row for row in topic_tally(stories)}
+    assert rows["space"] == {"topic": "space", "printed": 3, "up": 2, "down": 0}
+    assert rows["art-crafts"] == {"topic": "art-crafts", "printed": 1, "up": 0, "down": 1}
+    assert rows["other"]["printed"] == 1  # a story printed before topics were recorded
+    assert [row["topic"] for row in topic_tally(stories)][0] == "space"
+    # The question "which topics did I vote down" must be answerable from this alone.
+    assert [row["topic"] for row in topic_tally(stories) if row["down"]] == ["art-crafts"]
 
 
 def test_theme_shift_finds_rising_and_fading() -> None:

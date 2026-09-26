@@ -125,7 +125,8 @@ def page_snapshot(path: str) -> str:
     parts = [p for p in urlparse(path or "/").path.split("/") if p]
     if parts == ["trends"]:
         return ("The 'Your taste' page: charts of how each topic's stories were voted on, rising and "
-                "fading themes, and the discovery topics list. Call taste_report for the numbers.")
+                "fading themes, and the discovery topics list. Call taste_report for the numbers, "
+                "and read_edition if they ask what is in the paper.")
     if parts and not (parts[0] == "day" and len(parts) == 2):
         return "Nothing is being shown."
     dates = edition_dates()

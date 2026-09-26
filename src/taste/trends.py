@@ -96,6 +96,23 @@ def top_themes(stories: list[dict], limit: int = 15) -> list[dict]:
     return rows[:limit]
 
 
+def topic_tally(stories: list[dict]) -> list[dict]:
+    """All-time per topic: printed, liked, disliked. `weekly_topics` answers
+    "when", which the charts need; this answers "which topics", which is what a
+    reader actually asks out loud."""
+    tally: dict[str, dict[str, int]] = defaultdict(lambda: {"printed": 0, "up": 0, "down": 0})
+    for story in stories:
+        counts = tally[story["topic"] or "other"]
+        counts["printed"] += 1
+        if story["vote"] > 0:
+            counts["up"] += 1
+        elif story["vote"] < 0:
+            counts["down"] += 1
+    rows = [{"topic": topic, **counts} for topic, counts in tally.items()]
+    rows.sort(key=lambda r: (-r["up"], -r["down"], r["topic"]))
+    return rows
+
+
 def _headline(story: dict) -> dict:
     return {
         "date": story["date"],

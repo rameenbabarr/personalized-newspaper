@@ -49,7 +49,9 @@
   /* Expanded: the panel fills the window. The conversation keeps a column
      width, or bubbles would stretch to a metre wide on a desktop screen. */
   .meen.expanded .meen-panel { inset: 16px; width: auto; height: auto; border-radius: 20px; }
-  .meen.expanded .meen-launch, .meen.expanded .meen-tip { display: none; }
+  /* Only while the panel is actually open: minimising must always give the
+     launcher back, or the chat becomes unreachable. */
+  .meen.expanded.open .meen-launch, .meen.expanded.open .meen-tip { display: none; }
   .meen.expanded .meen-log { padding: 26px 20px 16px; }
   .meen.expanded .meen-log > *, .meen.expanded .meen-field { width: 100%; max-width: 760px; margin-left: auto; margin-right: auto; }
   .meen.expanded .m-bubble { max-width: 74%; }
@@ -101,6 +103,17 @@
   .m-bubble strong { font-weight: 650; }
   .m-bubble a { color: var(--m-red); text-underline-offset: 2px; }
   .m-bubble code { font: 12.5px ui-monospace, Menlo, monospace; background: #f4efe7; padding: 1px 5px; border-radius: 5px; }
+
+  /* Figures, set like a newspaper table: a rule under the headings, numerals
+     lined up on the right. A bubble holding one is allowed to run wider. */
+  .m-bubble table { width: 100%; border-collapse: collapse; margin: .45em 0 .65em; }
+  .m-bubble th, .m-bubble td { padding: 5px 10px 5px 0; text-align: left; vertical-align: baseline; border-bottom: 1px solid var(--m-line); }
+  .m-bubble th { font: 600 10.5px var(--m-sans); letter-spacing: .07em; text-transform: uppercase; color: var(--m-soft);
+    border-bottom: 1.5px solid rgba(23, 19, 15, .32); padding-bottom: 6px; white-space: nowrap; }
+  .m-bubble td { font-size: 14px; }
+  .m-bubble th.num, .m-bubble td.num { text-align: right; padding-right: 0; font-variant-numeric: tabular-nums; }
+  .m-bubble tbody tr:last-child td { border-bottom: 0; padding-bottom: 0; }
+  .m-row.meen .m-bubble:has(table) { max-width: 100%; }
 
   .m-dots { display: inline-flex; gap: 4px; padding: 4px 2px; }
   .m-dots i { width: 7px; height: 7px; border-radius: 50%; background: #b9ada0; animation: m-bounce 1.2s infinite ease-in-out; }
@@ -239,7 +252,8 @@
   store.set("meen-thread", thread);
 
   // Small, safe Markdown: escape everything first, then allow bold, italics,
-  // inline code, http(s) links, bullet and numbered lists, and paragraphs.
+  // inline code, http(s) links, bullet and numbered lists, pipe tables, and
+  // paragraphs.
   const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const inline = (s) => esc(s)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
@@ -247,13 +261,37 @@
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, "$1<em>$2</em>")
     .replace(/(^|[^\w])_([^_\n]+)_(?!\w)/g, "$1<em>$2</em>");
+  // A pipe table: a header row, then a |---|---| rule, then the body.
+  const cells = (line) => line.replace(/^\s*\|/, "").replace(/\|\s*$/, "").split("|").map((c) => c.trim());
+  const isRule = (line) => /^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$/.test(line);
+  // Figures get a right-aligned, tabular-numeral column, the way a paper sets them.
+  const isNum = (cell) => /^[-+(]?[\d][\d\s.,%/:+-]*\)?$/.test(cell.replace(/\*\*/g, "").trim());
+  function tableHtml(head, rows) {
+    const numeric = head.map((_, i) => rows.length > 0 && rows.every((r) => !r[i] || isNum(r[i])));
+    const cls = (i) => (numeric[i] ? ' class="num"' : "");
+    const tr = (row, tag) =>
+      "<tr>" + head.map((_, i) => `<${tag}${cls(i)}>` + inline(row[i] || "") + `</${tag}>`).join("") + "</tr>";
+    return "<table><thead>" + tr(head, "th") + "</thead><tbody>" +
+      rows.map((r) => tr(r, "td")).join("") + "</tbody></table>";
+  }
+
   function markdown(text) {
     const out = [];
     let list = null, para = [];
     const flushPara = () => { if (para.length) { out.push("<p>" + para.map(inline).join("<br>") + "</p>"); para = []; } };
     const flushList = () => { if (list) { out.push(`<${list.tag}>` + list.items.map((i) => "<li>" + inline(i) + "</li>").join("") + `</${list.tag}>`); list = null; } };
-    for (const raw of text.replace(/\r/g, "").split("\n")) {
-      const line = raw.trim();
+    const lines = text.replace(/\r/g, "").split("\n");
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (line.includes("|") && isRule(lines[i + 1] || "")) {
+        flushPara(); flushList();
+        const head = cells(line);
+        const rows = [];
+        for (i += 2; i < lines.length && lines[i].includes("|"); i++) rows.push(cells(lines[i].trim()));
+        i--;  // the for-loop's own i++ takes us past the last body row
+        out.push(tableHtml(head, rows));
+        continue;
+      }
       const bullet = line.match(/^[-*•]\s+(.*)$/), num = line.match(/^\d+[.)]\s+(.*)$/);
       if (bullet || num) {
         flushPara();
